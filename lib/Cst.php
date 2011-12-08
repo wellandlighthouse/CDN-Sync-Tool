@@ -1,13 +1,35 @@
 <?php
-
+/**
+ * Core CST class
+ *
+ * Class that contains all of the methods needed to create connections, push files, etc.
+ *
+ * @author Ollie Armstrong
+ * @package CST
+ * @copyright All rights reserved 2011
+ * @license GNU GPLv2
+ */
 class Cst {
 	protected $awsAccessKey, $awsSecretKey, $cdnConnection, $connectionType;
 
 	function __construct() {
 		$this->connectionType = 'S3';
 		$this->createConnection();
+		add_action('admin_menu', array($this, 'createPages'));
 	}
 
+	/**
+	 * Creates the admin page(s) required
+	 * 
+	 */
+	function createPages() {
+		add_options_page('CST Options', 'CDN Sync Tool', 'manage_options', 'cst', 'function for page');
+	}
+
+	/**
+	 * Initialises the connection to the CDN
+	 * 
+	 */
 	function createConnection() {
 		if ($this->connectionType = 'S3') {
 			require_once CST_DIR.'lib/api/S3.php';
@@ -17,6 +39,10 @@ class Cst {
 		}
 	}
 
+	/**
+	 * Pushes a file to the CDN
+	 * 
+	 */
 	function pushFile() {
 		if ($this->connectionType = 'S3') {
 			// Puts a file to the bucket
