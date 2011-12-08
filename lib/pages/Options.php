@@ -17,8 +17,15 @@ class CST_Page_Options extends CST_Page {
 	 */
 	function page() {
 		// If this page's form is submitted, run the function before displaying page
-		if (isset($_POST['form']) && $_POST['form'] == 'options')
-			self::formSubmitted();
+		if (isset($_POST['form'])) {
+			if ($_POST['form'] == 'cst-main') {
+				self::formSubmitted('main');
+			} else if ($_POST['form'] == 'cst-js') {
+				self::formSubmitted('js');
+			} else if ($_POST['form'] == 'cst-css') {
+				self::formSubmitted('css');
+			}
+		}
 		self::loadOptions();
 		self::displayPage('options');
 	}
@@ -36,12 +43,19 @@ class CST_Page_Options extends CST_Page {
 	/**
 	 * Function to be run once the form is submitted
 	 * 
+	 * @param $form whether it is the main/js/css form
 	 */
-	function formSubmitted() {
+	function formSubmitted($form) {
 		if (wp_verify_nonce($GLOBALS['nonce'], 'cst-nonce')) {
-			update_option('cst-cdn', $_POST['options']['cdn']);
-			update_option('cst-s3-accesskey', $_POST['options']['cst-s3-accesskey']);
-			update_option('cst-s3-secretkey', $_POST['options']['cst-s3-secretkey']);
+			if ($form == 'main') {
+				update_option('cst-cdn', $_POST['options']['cdn']);
+				update_option('cst-s3-accesskey', $_POST['options']['cst-s3-accesskey']);
+				update_option('cst-s3-secretkey', $_POST['options']['cst-s3-secretkey']);
+			} else if ($form == 'js') {
+				// JAVASCRIPT FORM SUBMITTED
+			} else if ($form == 'css') {
+				// CSS FORM SUBMITTED
+			}
 		} else {
 			_e('Security error');
 			die;

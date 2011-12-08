@@ -19,10 +19,22 @@ class Cst {
 
 		// Create nonce
 		add_action('init', array($this, 'createNonce'));
+
+		// Enqueue files
+		add_action('admin_init', array($this, 'enqueueFiles'));
 	}
 
 	function createNonce() {
 		$GLOBALS['nonce'] = wp_create_nonce('cst-nonce');
+	}
+
+	/**
+	 * Enqueues the files
+	 * 
+	 */
+	function enqueueFiles() {
+		wp_enqueue_script('cst-generic-js', plugins_url('/js/cst-js.js', CST_FILE));
+		wp_enqueue_style('cst-generic-style', plugins_url('/css/cst-style.css', CST_FILE));
 	}
 
 	/**
