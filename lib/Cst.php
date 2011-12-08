@@ -16,6 +16,13 @@ class Cst {
 		$this->connectionType = 'S3';
 		$this->createConnection();
 		add_action('admin_menu', array($this, 'createPages'));
+
+		// Create nonce
+		add_action('init', array($this, 'createNonce'));
+	}
+
+	function createNonce() {
+		$GLOBALS['nonce'] = wp_create_nonce('cst-nonce');
 	}
 
 	/**

@@ -28,6 +28,12 @@ class CST_Page_Options extends CST_Page {
 	 * 
 	 */
 	function formSubmitted() {
-		echo 'done';
+		if (wp_verify_nonce($GLOBALS['nonce'], 'cst-nonce')) {
+			// Handles form submitted
+			echo '<pre>'; var_dump($_POST); echo '</pre>';
+		} else {
+			_e('Security error');
+			die;
+		}
 	}
 }
