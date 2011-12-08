@@ -29,8 +29,8 @@ class CST_Page_Options extends CST_Page {
 	 */
 	function formSubmitted() {
 		if (wp_verify_nonce($GLOBALS['nonce'], 'cst-nonce')) {
-			// Handles form submitted
-			echo '<pre>'; var_dump($_POST); echo '</pre>';
+			update_option('cst-s3-accesskey', $_POST['options']['accesskey']);
+			update_option('cst-s3-secretkey', $_POST['options']['secretkey']);
 		} else {
 			_e('Security error');
 			die;

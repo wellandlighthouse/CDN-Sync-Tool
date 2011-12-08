@@ -1,10 +1,19 @@
 <div class="wrap">
 	<h2>CDN Sync Tool - Options</h2>
 	<form action="" method="post">
-		<label>Access key</label><input type="text" name="options[accesskey]" />
-		<label>Secret key</label><input type="text" name="options[secretkey]" />
+		<table class="form-table">
+			<tbody>
+				<tr valign="top">
+					<th scope="row"><label for="accesskey">Access key</label></th>
+					<td><input type="text" name="options[accesskey]" id="accesskey" /></td>
+				<tr>
+				<tr valign="top">
+					<th scope="row"><label for="secretkey">Secret Key</label></th>
+					<td><input type="text" name="options[secretkey]" id="secretkey" /></td>
+			</tbody>
+		</table>
 		<input type="hidden" name="form" value="options" />
 		<?php wp_nonce_field('cst-nonce'); ?>
-		<input type="submit" name="submit" value="submit" />
+		<p class="submit"><input type="submit" name="submit" class="button-primary" value="Save Changes" /></p>
 	</form>
 </div>
