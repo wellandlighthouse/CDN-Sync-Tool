@@ -10,6 +10,7 @@
  * @license GNU GPLv2
  */
 class CST_Page {
+	protected static $options = array();
 	/**
 	 * Takes the page type and requires the correct file
 	 * 

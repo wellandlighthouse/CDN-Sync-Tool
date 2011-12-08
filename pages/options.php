@@ -4,12 +4,20 @@
 		<table class="form-table">
 			<tbody>
 				<tr valign="top">
-					<th scope="row"><label for="accesskey">Access key</label></th>
-					<td><input type="text" name="options[accesskey]" id="accesskey" /></td>
+					<th scope="row"><label for="cdn">Content Delivery Network</label></th>
+					<td>
+						<select id="cdn" name="options[cdn]">
+							<option value="S3" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'S3') { echo 'selected="selected"'; } ?>>S3</option>
+						</select>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><label for="accesskey">Access Key</label></th>
+					<td><input type="text" name="options[cst-s3-accesskey]" id="accesskey" <?php if (isset(self::$options['cst-s3-accesskey'])) {echo 'value="'.esc_attr(self::$options['cst-s3-accesskey']).'"'; } ?> /></td>
 				<tr>
 				<tr valign="top">
 					<th scope="row"><label for="secretkey">Secret Key</label></th>
-					<td><input type="text" name="options[secretkey]" id="secretkey" /></td>
+					<td><input type="text" name="options[cst-s3-secretkey]" id="secretkey" <?php if (isset(self::$options['cst-s3-secretkey'])) {echo 'value="'.esc_attr(self::$options['cst-s3-secretkey']).'"'; } ?> /></td>
 			</tbody>
 		</table>
 		<input type="hidden" name="form" value="options" />
