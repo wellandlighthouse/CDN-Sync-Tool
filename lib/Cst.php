@@ -23,7 +23,8 @@ class Cst {
 	 * 
 	 */
 	function createPages() {
-		add_options_page('CST Options', 'CDN Sync Tool', 'manage_options', 'cst', 'function for page');
+		require_once CST_DIR.'lib/pages/Options.php';
+		add_options_page('CST Options', 'CDN Sync Tool', 'manage_options', 'cst', array('CST_Page_Options', 'page'));
 	}
 
 	/**
