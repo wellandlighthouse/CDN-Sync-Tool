@@ -13,7 +13,7 @@ class Cst {
 	protected $cdnConnection, $connectionType, $fileTypes;
 
 	function __construct() {
-		$this->connectionType = 'S3';
+		$this->connectionType = get_option('cst-cdn');
 		$this->createConnection();
 		add_action('admin_menu', array($this, 'createPages'));
 
@@ -22,9 +22,6 @@ class Cst {
 
 		// Enqueue files
 		add_action('admin_init', array($this, 'enqueueFiles'));
-
-		// Files test
-		$this->syncFiles();
 	}
 
 	/**
@@ -32,11 +29,19 @@ class Cst {
 	 * 
 	 */
 	private function createConnection() {
-		if ($this->connectionType = 'S3') {
+		if ($this->connectionType == 'S3') {
 			require_once CST_DIR.'lib/api/S3.php';
 			$awsAccessKey = get_option('cst-s3-accesskey');
 			$awsSecretKey = get_option('cst-s3-secretkey');
 			$this->cdnConnection = new S3($awsAccessKey, $awsSecretKey);
+		} else if ($this->connectionType == 'FTP') {
+			$this->cdnConnection = ftp_connect(get_option('cst-ftp-server'), get_option('cst-ftp-port'));
+			if ($this->cdnConnection === false) {
+				require_once CST_DIR.'lib/pages/Options.php';
+				CST_Page::$messages[] = 'FTP Connection error, please check details.';
+			} else {
+				ftp_login($this->cdnConnection, get_option('cst-ftp-username'), get_option('cst-ftp-password'));
+			}
 		}
 	}
 
@@ -87,6 +92,8 @@ class Cst {
 	 */
 	public function syncFiles() {
 		global $wpdb;
+
+		$this->findFiles();
 		
 		$filesToSync = $wpdb->get_results("SELECT * FROM `".CST_TABLE_FILES."` WHERE `synced` = '0'", ARRAY_A);
 		
