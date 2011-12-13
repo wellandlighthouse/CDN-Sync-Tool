@@ -22,6 +22,9 @@ class Cst {
 
 		// Enqueue files
 		add_action('admin_init', array($this, 'enqueueFiles'));
+
+		// Files test
+		$this->findFiles();
 	}
 
 	/**
@@ -54,7 +57,20 @@ class Cst {
 	 * 
 	 */
 	private function findFiles() {
-		echo '<pre>'; var_dump($this->getDirectoryFiles(array(get_template_directory(),get_stylesheet_directory()))); echo '</pre>';
+		global $wpdb;
+
+		$files = $this->getDirectoryFiles(array(get_template_directory(),get_stylesheet_directory()));
+		
+		// Adds file to db
+		foreach($files as $file) {
+			$wpdb->insert(
+				CST_TABLE_FILES,
+				array(
+					'file_dir' => $file,
+					'synced' => '0'
+				)
+			);
+		}
 	}
 
 	/**
