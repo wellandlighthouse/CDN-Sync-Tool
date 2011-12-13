@@ -31,7 +31,7 @@ class CST_Page_Options extends CST_Page {
 	}
 
 	/**
-	 * Gets the options from the database and populates and array
+	 * Gets the options from the database and populates an array
 	 * 
 	 */
 	function loadOptions() {
@@ -46,11 +46,12 @@ class CST_Page_Options extends CST_Page {
 	 * @param $form whether it is the main/js/css form
 	 */
 	function formSubmitted($form) {
+		echo '<pre>'; var_dump($_POST); echo '</pre>';
 		if (wp_verify_nonce($GLOBALS['nonce'], 'cst-nonce')) {
 			if ($form == 'main') {
-				update_option('cst-cdn', $_POST['options']['cdn']);
-				update_option('cst-s3-accesskey', $_POST['options']['cst-s3-accesskey']);
-				update_option('cst-s3-secretkey', $_POST['options']['cst-s3-secretkey']);
+				foreach($_POST['options'] as $key => $value) {
+					update_option($key, $value);
+				}
 			} else if ($form == 'js') {
 				// JAVASCRIPT FORM SUBMITTED
 			} else if ($form == 'css') {

@@ -10,7 +10,7 @@
  * @license GNU GPLv2
  */
 class Cst {
-	protected $awsAccessKey, $awsSecretKey, $cdnConnection, $connectionType;
+	protected $cdnConnection, $connectionType;
 
 	function __construct() {
 		$this->connectionType = 'S3';
@@ -53,9 +53,9 @@ class Cst {
 	function createConnection() {
 		if ($this->connectionType = 'S3') {
 			require_once CST_DIR.'lib/api/S3.php';
-			$this->awsAccessKey = 'AKIAJN7MVVP5GFYINGQQ';
-			$this->awsSecretKey = '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';
-			$this->cdnConnection = new S3($this->awsAccessKey, $this->awsSecretKey);
+			$awsAccessKey = get_option('cst-s3-accesskey');
+			$awsSecretKey = get_option('cst-s3-secretkey');
+			$this->cdnConnection = new S3($awsAccessKey, $awsSecretKey);
 		}
 	}
 
