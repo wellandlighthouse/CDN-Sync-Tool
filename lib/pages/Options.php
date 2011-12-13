@@ -24,6 +24,8 @@ class CST_Page_Options extends CST_Page {
 				self::formSubmitted('js');
 			} else if ($_POST['form'] == 'cst-css') {
 				self::formSubmitted('css');
+			} else if ($_POST['form'] == 'sync') {
+				$core->syncFiles();
 			}
 		}
 		self::loadOptions();
@@ -38,6 +40,10 @@ class CST_Page_Options extends CST_Page {
 		parent::$options['cst-cdn'] = get_option('cst-cdn');
 		parent::$options['cst-s3-accesskey'] = get_option('cst-s3-accesskey');
 		parent::$options['cst-s3-secretkey'] = get_option('cst-s3-secretkey');
+		parent::$options['cst-ftp-server'] = get_option('cst-ftp-server');
+		parent::$options['cst-ftp-port'] = get_option('cst-ftp-port');
+		parent::$options['cst-ftp-username'] = get_option('cst-ftp-username');
+		parent::$options['cst-ftp-password'] = get_option('cst-ftp-password');
 	}
 
 	/**

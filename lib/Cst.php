@@ -85,7 +85,7 @@ class Cst {
 	 * Syncs all required files to CDN
 	 * 
 	 */
-	private function syncFiles() {
+	public function syncFiles() {
 		global $wpdb;
 		
 		$filesToSync = $wpdb->get_results("SELECT * FROM `".CST_TABLE_FILES."` WHERE `synced` = '0'", ARRAY_A);

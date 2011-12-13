@@ -20,5 +20,7 @@
 		</div>
 	<?php } else if (isset($_GET['section']) && $_GET['section'] == 'cdn') {
 		require_once CST_DIR.'pages/options/cdn.php';
+	} else {
+		require_once CST_DIR.'pages/options/main.php';
 	} ?>
 </div>
