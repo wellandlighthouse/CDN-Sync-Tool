@@ -28,6 +28,7 @@ function cst_install() {
 		CREATE TABLE IF NOT EXISTS ".CST_TABLE_FILES." (
 		  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 		  `file_dir` text NOT NULL,
+		  `remote_path` text NOT NULL,
 		  `synced` tinyint(1) NOT NULL,
 		  PRIMARY KEY (`id`)
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8;

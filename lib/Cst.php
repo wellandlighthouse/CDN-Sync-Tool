@@ -24,7 +24,7 @@ class Cst {
 		add_action('admin_init', array($this, 'enqueueFiles'));
 
 		// Files test
-		$this->findFiles();
+		$this->syncFiles();
 	}
 
 	/**
@@ -43,12 +43,14 @@ class Cst {
 	/**
 	 * Pushes a file to the CDN
 	 * 
+	 * @param $file string path to the file to push
+	 * @param $remotePath string path to the remote file
 	 */
-	private function pushFile() {
+	private function pushFile($file, $remotePath) {
 		if ($this->connectionType = 'S3') {
 			// Puts a file to the bucket
 			// putObjectFile(localName, bucketName, remoteName, ACL)
-			$this->cdnConnection->putObjectFile('test.txt', 'ollie-armstrong-dev-test', 'test.txt', S3::ACL_PUBLIC_READ);
+			$this->cdnConnection->putObjectFile($file, 'ollie-armstrong-dev-test', $remotePath, S3::ACL_PUBLIC_READ);
 		}
 	}
 
@@ -58,16 +60,45 @@ class Cst {
 	 */
 	private function findFiles() {
 		global $wpdb;
-
 		$files = $this->getDirectoryFiles(array(get_template_directory(),get_stylesheet_directory()));
 		
 		// Adds file to db
 		foreach($files as $file) {
+
+			if (stristr($file, 'wp-content')) {
+				$remotePath = preg_split('$wp-content$', $file);
+				$remotePath = 'wp-content'.$remotePath[1];
+			}
+
 			$wpdb->insert(
 				CST_TABLE_FILES,
 				array(
 					'file_dir' => $file,
+					'remote_path' => $remotePath,
 					'synced' => '0'
+				)
+			);
+		}
+	}
+
+	/**
+	 * Syncs all required files to CDN
+	 * 
+	 */
+	private function syncFiles() {
+		global $wpdb;
+		
+		$filesToSync = $wpdb->get_results("SELECT * FROM `".CST_TABLE_FILES."` WHERE `synced` = '0'", ARRAY_A);
+		
+		foreach($filesToSync as $file) {
+			$this->pushFile($file['file_dir'], $file['remote_path']);
+			$wpdb->update(
+				CST_TABLE_FILES,
+				array(
+					'synced' => '1'
+				),
+				array(
+					'id' => $file['id']
 				)
 			);
 		}
@@ -85,7 +116,7 @@ class Cst {
 			if ($handle = opendir($dir)) {
 				while (false !== ($entry = readdir($handle))) {
 					if (preg_match('$.(css|js|jpe?g|gif|png)$', $entry)) {
-						$files[] = $dir.$entry;
+						$files[] = $dir.'/'.$entry;
 					}
 				}
 				closedir($handle);
@@ -99,7 +130,7 @@ class Cst {
 	}
 
 	/**
-	 * Enqueues the files
+	 * Enqueues the JS/CSS
 	 * 
 	 */
 	public function enqueueFiles() {
