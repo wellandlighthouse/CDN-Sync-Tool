@@ -24,8 +24,8 @@ class CST_Page_Options extends CST_Page {
 				self::formSubmitted('js');
 			} else if ($_POST['form'] == 'cst-css') {
 				self::formSubmitted('css');
-			} else if ($_POST['form'] == 'sync') {
-				$core->syncFiles();
+			} else if ($_POST['form'] == 'cst-sync') {
+				$GLOBALS['core']->syncFiles();
 			}
 		}
 		self::loadOptions();

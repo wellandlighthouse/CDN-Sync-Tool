@@ -29,6 +29,7 @@ class Cst {
 	 * 
 	 */
 	private function createConnection() {
+		require_once CST_DIR.'lib/pages/Options.php';
 		if ($this->connectionType == 'S3') {
 			require_once CST_DIR.'lib/api/S3.php';
 			$awsAccessKey = get_option('cst-s3-accesskey');
@@ -37,10 +38,11 @@ class Cst {
 		} else if ($this->connectionType == 'FTP') {
 			$this->cdnConnection = ftp_connect(get_option('cst-ftp-server'), get_option('cst-ftp-port'));
 			if ($this->cdnConnection === false) {
-				require_once CST_DIR.'lib/pages/Options.php';
-				CST_Page::$messages[] = 'FTP Connection error, please check details.';
+				CST_Page::$messages[] = 'FTP connection error, please check details.';
 			} else {
-				ftp_login($this->cdnConnection, get_option('cst-ftp-username'), get_option('cst-ftp-password'));
+				if (ftp_login($this->cdnConnection, get_option('cst-ftp-username'), get_option('cst-ftp-password')) === false) {
+					CST_Page::$messages[] = 'FTP login error, please check details.';
+				}
 			}
 		}
 	}
@@ -52,10 +54,13 @@ class Cst {
 	 * @param $remotePath string path to the remote file
 	 */
 	private function pushFile($file, $remotePath) {
-		if ($this->connectionType = 'S3') {
+		if ($this->connectionType == 'S3') {
 			// Puts a file to the bucket
 			// putObjectFile(localName, bucketName, remoteName, ACL)
 			$this->cdnConnection->putObjectFile($file, 'ollie-armstrong-dev-test', $remotePath, S3::ACL_PUBLIC_READ);
+		} else if ($this->connectionType == 'FTP') {
+			$remoteDir = ftp_pwd($this->cdnConnection).'/'.$remotePath;
+			ftp_put($this->cdnConnection, $remoteDir, $file, FTP_ASCII);
 		}
 	}
 
