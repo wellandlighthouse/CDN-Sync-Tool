@@ -46,7 +46,6 @@ class CST_Page_Options extends CST_Page {
 	 * @param $form whether it is the main/js/css form
 	 */
 	function formSubmitted($form) {
-		echo '<pre>'; var_dump($_POST); echo '</pre>';
 		if (wp_verify_nonce($GLOBALS['nonce'], 'cst-nonce')) {
 			if ($form == 'main') {
 				foreach($_POST['options'] as $key => $value) {
