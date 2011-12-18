@@ -10,7 +10,7 @@
  * @license GNU GPLv2
  */
 class Cst {
-	protected $cdnConnection, $connectionType, $fileTypes;
+	protected $cdnConnection, $connectionType, $fileTypes, $ftpHome;
 
 	function __construct() {
 		$this->connectionType = get_option('cst-cdn');
@@ -43,6 +43,7 @@ class Cst {
 				if (ftp_login($this->cdnConnection, get_option('cst-ftp-username'), get_option('cst-ftp-password')) === false) {
 					CST_Page::$messages[] = 'FTP login error, please check details.';
 				}
+				$this->ftpHome = ftp_pwd($this->cdnConnection);
 			}
 		}
 	}
@@ -59,8 +60,20 @@ class Cst {
 			// putObjectFile(localName, bucketName, remoteName, ACL)
 			$this->cdnConnection->putObjectFile($file, 'ollie-armstrong-dev-test', $remotePath, S3::ACL_PUBLIC_READ);
 		} else if ($this->connectionType == 'FTP') {
-			$remoteDir = ftp_pwd($this->cdnConnection).'/'.$remotePath;
-			ftp_put($this->cdnConnection, $remoteDir, $file, FTP_ASCII);
+			ftp_chdir($this->cdnConnection, $this->ftpHome.'/test');
+			// Creates an array of the directory tree
+			$remotePathExploded = explode('/', $remotePath);
+			$filename = array_pop($remotePathExploded);
+			foreach($remotePathExploded as $dir) {
+				$rawlist = ftp_rawlist($this->cdnConnection, $dir);
+				// If dir doesn't exist, create it
+				if(empty($rawlist)) {
+					ftp_mkdir($this->cdnConnection, $dir);
+				}
+				ftp_chdir($this->cdnConnection, $dir);
+			}
+			// Uploads files
+			ftp_put($this->cdnConnection, $filename, $file, FTP_ASCII);
 		}
 	}
 
@@ -70,14 +83,16 @@ class Cst {
 	 */
 	private function findFiles() {
 		global $wpdb;
-		$files = $this->getDirectoryFiles(array(get_template_directory(),get_stylesheet_directory()));
-		
+		$files = $this->getDirectoryFiles(array(get_template_directory(),get_stylesheet_directory(),ABSPATH."wp-includes"));
 		// Adds file to db
 		foreach($files as $file) {
 
 			if (stristr($file, 'wp-content')) {
 				$remotePath = preg_split('$wp-content$', $file);
 				$remotePath = 'wp-content'.$remotePath[1];
+			} else if (stristr($file, 'wp-includes')) {
+				$remotePath = preg_split('$wp-includes$', $file);
+				$remotePath = 'wp-includes'.$remotePath[1];
 			}
 
 			$wpdb->insert(
@@ -127,7 +142,7 @@ class Cst {
 		foreach ($dirs as $dir) {
 			if ($handle = opendir($dir)) {
 				while (false !== ($entry = readdir($handle))) {
-					if (preg_match('$.(css|js|jpe?g|gif|png)$', $entry)) {
+					if (preg_match('$\.(css|js|jpe?g|gif|png)$', $entry)) {
 						$files[] = $dir.'/'.$entry;
 					}
 				}
