@@ -83,6 +83,8 @@ class Cst {
 	private function findFiles() {
 		global $wpdb;
 		$files = $this->getDirectoryFiles(array(get_template_directory(),get_stylesheet_directory(),ABSPATH.'wp-includes'));
+		$mediaFiles = $this->getMediaFiles();
+		$files = array_merge($files, $mediaFiles);
 		
 		// Adds file to db
 		foreach($files as $file) {
@@ -116,13 +118,17 @@ class Cst {
 		$this->findFiles();
 		
 		$filesToSync = $wpdb->get_results("SELECT * FROM `".CST_TABLE_FILES."` WHERE `synced` = '0'", ARRAY_A);
-		
+		$total = count($filesToSync);
+		$i = 1;
+		echo '<div class="cst-progress">';	
+		echo '<h2>Syncing Files..</h2>';
 		foreach($filesToSync as $file) {
 			$this->pushFile($file['file_dir'], $file['remote_path']);
 			$padstr = str_pad("", 512, " ");
 			echo $padstr;
-			echo 'Syncing '.$file['remote_path'].'<br />';
+			echo 'Syncing ['.$i.'/'.$total.'] '.$file['remote_path'].'<br />';
 			flush();
+			$i++;
 			$wpdb->update(
 				CST_TABLE_FILES,
 				array(
@@ -133,7 +139,28 @@ class Cst {
 				)
 			);
 		}
-		echo 'All files synced';
+		echo 'All files synced</div>';
+	}
+
+	/**
+ 	 * Gets all media files
+ 	 * 
+	 */
+	private function getMediaFiles() {
+		global $wpdb;
+		$mediaFiles = array();
+		$files = $wpdb->get_results("SELECT pmo.meta_value AS filename , pmt.meta_value AS meta 
+							 FROM ".$wpdb->postmeta." as pmo 
+							 INNER JOIN ".$wpdb->postmeta." as pmt 
+							 ON pmt.post_id = pmo.post_id 
+							 AND pmt.meta_key = '_wp_attachment_metadata'   
+							 WHERE pmo.meta_key = '_wp_attached_file'",ARRAY_A );
+		$uploadDir = wp_upload_dir();
+		$uploadDir = $uploadDir['basedir'].'/';
+		foreach($files as $file) {
+			$mediaFiles[] = $uploadDir.$file['filename'];
+		}
+		return $mediaFiles;
 	}
 
 	/**
