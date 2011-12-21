@@ -60,14 +60,13 @@ class Cst {
 			// putObjectFile(localName, bucketName, remoteName, ACL)
 			$this->cdnConnection->putObjectFile($file, 'ollie-armstrong-dev-test', $remotePath, S3::ACL_PUBLIC_READ);
 		} else if ($this->connectionType == 'FTP') {
+			// Creates the directories
 			ftp_chdir($this->cdnConnection, $this->ftpHome.'/test');
-			// Creates an array of the directory tree
 			$remotePathExploded = explode('/', $remotePath);
 			$filename = array_pop($remotePathExploded);
 			foreach($remotePathExploded as $dir) {
 				$rawlist = ftp_rawlist($this->cdnConnection, $dir);
-				// If dir doesn't exist, create it
-				if(empty($rawlist)) {
+				if (empty($rawlist)) {
 					ftp_mkdir($this->cdnConnection, $dir);
 				}
 				ftp_chdir($this->cdnConnection, $dir);
@@ -83,7 +82,8 @@ class Cst {
 	 */
 	private function findFiles() {
 		global $wpdb;
-		$files = $this->getDirectoryFiles(array(get_template_directory(),get_stylesheet_directory(),ABSPATH."wp-includes"));
+		$files = $this->getDirectoryFiles(array(get_template_directory(),get_stylesheet_directory(),ABSPATH.'wp-includes'));
+		
 		// Adds file to db
 		foreach($files as $file) {
 
@@ -119,6 +119,10 @@ class Cst {
 		
 		foreach($filesToSync as $file) {
 			$this->pushFile($file['file_dir'], $file['remote_path']);
+			$padstr = str_pad("", 512, " ");
+			echo $padstr;
+			echo 'Syncing '.$file['remote_path'].'<br />';
+			flush();
 			$wpdb->update(
 				CST_TABLE_FILES,
 				array(
@@ -129,6 +133,7 @@ class Cst {
 				)
 			);
 		}
+		echo 'All files synced';
 	}
 
 	/**
