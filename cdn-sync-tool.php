@@ -33,6 +33,18 @@ function cst_install() {
 		  PRIMARY KEY (`id`)
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 	");
+
+	wp_schedule_event(time(), 'hourly', 'cron_cst_sync');
+}
+
+function cst_deactivate() {
+	wp_clear_scheduled_hook('cron_cst_sync');
+}
+
+function hourlySync() {
+	$core->syncFiles();
 }
 
 register_activation_hook(__FILE__, "cst_install");
+register_deactivation_hook(__FILE__, 'cst_deactivate');
+add_action('cron_cst_sync', 'hourlySync');
