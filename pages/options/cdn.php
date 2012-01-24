@@ -47,6 +47,11 @@
 						<th scope="row"><label for="ftp-password">Password</label></th>
 						<td><input type="password" name="options[cst-ftp-password]" id="ftp-password" <?php if (isset(self::$options['cst-ftp-password'])) {echo 'value="'.esc_attr(self::$options['cst-ftp-password']).'"'; } ?> /></td>
 					</tr>
+					<tr valign="top">
+						<th scope="row"><label for="ftp-dir">Directory</label?</th>
+						<td><input type="text" name="options[cst-ftp-dir]" id="ftp-dir" <?php if (isset(self::$options['cst-ftp-dir'])) {echo 'value="'.esc_attr(self::$options['cst-ftp-dir']).'"'; } ?> /></td>
+						<td><strong>Make sure the directory exists and is writable by the web server.</strong></td>
+					</tr>
 				</tbody>
 			</table>
 

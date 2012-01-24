@@ -47,6 +47,7 @@ class CST_Page_Options extends CST_Page {
 		parent::$options['cst-ftp-port'] = get_option('cst-ftp-port');
 		parent::$options['cst-ftp-username'] = get_option('cst-ftp-username');
 		parent::$options['cst-ftp-password'] = get_option('cst-ftp-password');
+		parent::$options['cst-ftp-dir'] = get_option('cst-ftp-dir');
 	}
 
 	/**
