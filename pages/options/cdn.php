@@ -65,6 +65,11 @@
 					<tr valign="top">
 						<th scope="row"><label for="cf-api">API Key</label></th>
 						<td><input type="text" name="options[cst-cf-api]" id="cf-api" <?php if (isset(self::$options['cst-cf-api'])) {echo 'value="'.esc_attr(self::$options['cst-cf-api']).'"'; } ?> /></td>
+					</tr>
+					<tr valign="top">
+						<th scope="row"><label for="cf-container">Container</label></th>
+						<td><input type="text" name="options[cst-cf-container]" id="cf-container" <?php if (isset(self::$options['cst-cf-container'])) {echo 'value="'.esc_attr(self::$options['cst-cf-container']).'"'; } ?> /></td>
+						<td><strong>If the container does not exist it will be created</strong></td>
 				</tbody>
 			</table>
 		</div>

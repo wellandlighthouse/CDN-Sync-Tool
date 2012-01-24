@@ -87,6 +87,8 @@ class Cst {
 			}
 			// Uploads files
 			ftp_put($this->cdnConnection, $filename, $file, FTP_ASCII);
+		} else if ($this->connectionType == 'Cloudfiles') {
+			echo 'cloudfiles uploading....';
 		}
 	}
 
