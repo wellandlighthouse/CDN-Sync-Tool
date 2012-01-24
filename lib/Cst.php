@@ -61,6 +61,10 @@ class Cst {
 			$this->cdnConnection->putObjectFile($file, 'ollie-armstrong-dev-test', $remotePath, S3::ACL_PUBLIC_READ);
 		} else if ($this->connectionType == 'FTP') {
 			$initDir = get_option('cst-ftp-dir');
+			if ($initDir[0] != '/') {
+				update_option('cst-ftp-dir', '/'.$initDir);
+				$initDir = get_option('cst-ftp-dir');
+			}
 			// Creates the directories
 			ftp_chdir($this->cdnConnection, $this->ftpHome.$initDir);
 			$remotePathExploded = explode('/', $remotePath);
