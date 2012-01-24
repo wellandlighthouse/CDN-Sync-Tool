@@ -8,6 +8,7 @@
 						<select id="cdn" name="options[cst-cdn]">
 							<option value="S3" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'S3') { echo 'selected="selected"'; } ?>>S3</option>
 							<option value="FTP" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'FTP') { echo 'selected="selected"'; } ?>>FTP</option>
+							<option value="Cloudfiles" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'Cloudfiles') { echo 'selected="selected"'; } ?>>Cloudfiles</option>
 						</select>
 					</td>
 				</tr>
@@ -55,6 +56,17 @@
 				</tbody>
 			</table>
 
+			<table class="form-table Cloudfiles">
+				<tbody>
+					<tr valign="top">
+						<th scope="row"><label for="cf-username">Username</label></th>
+						<td><input type="text" name="options[cst-cf-username]" id="cf-username" <?php if (isset(self::$options['cst-cf-username'])) {echo 'value="'.esc_attr(self::$options['cst-cf-username']).'"'; } ?> /></td>
+					</tr>
+					<tr valign="top">
+						<th scope="row"><label for="cf-api">API Key</label></th>
+						<td><input type="text" name="options[cst-cf-api]" id="cf-api" <?php if (isset(self::$options['cst-cf-api'])) {echo 'value="'.esc_attr(self::$options['cst-cf-api']).'"'; } ?> /></td>
+				</tbody>
+			</table>
 		</div>
 
 		<input type="hidden" name="form" value="cst-main" />

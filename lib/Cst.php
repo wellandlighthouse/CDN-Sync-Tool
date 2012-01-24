@@ -45,6 +45,15 @@ class Cst {
 				}
 				$this->ftpHome = ftp_pwd($this->cdnConnection);
 			}
+		} else if ($this->connectionType == 'Cloudfiles') {
+			require_once CST_DIR.'/lib/api/cloudfiles.php';
+			try {
+				$cfAuth = new CF_Authentication(get_option('cst-cf-username'), get_option('cst-cf-api'));
+				$cfAuth->authenticate();
+				$this->cdnConnection = new CF_Connection($cfAuth);
+			} catch (Exception $e) {
+				CST_Page::$messages[] = 'Cloudfiles connection error, please check details.';
+			}
 		}
 	}
 
