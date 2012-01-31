@@ -123,7 +123,7 @@ class Cst {
 
 			$changedate = filemtime($file);
 
-			if (!empty($row) && $changedate != $row->changedate) {
+			if ((!empty($row) && $changedate != $row->changedate) || (isset($_POST['cst-options']['syncall']))) {
 				$wpdb->update(
 					CST_TABLE_FILES,
 					array('changedate' => $changedate, 'synced' => '0'),

@@ -8,6 +8,7 @@
 			<div class="cst-sync-options-input"><input type="checkbox" checked="checked" name="cst-options[syncfiles][wp]" id="cst-sync-wp"><label for="cst-sync-wp">WP Files</label></div>
 			<div class="cst-sync-options-input"><input type="checkbox" checked="checked" name="cst-options[syncfiles][plugin]" id="cst-sync-plugin"><label for="cst-sync-plugin">Plugin Files</label></div>
 			<div class="cst-sync-options-input"><input type="checkbox" checked="checked" name="cst-options[syncfiles][cssjs]" id="cst-sync-cssjs"><label for="cst-sync-cssjs">CSS/JS Files</label></div>
+			<div class="cst-sync-options-input"><input type="checkbox" name="cst-options[syncall]" id="cst-sync-all"><label for="cst-sync-all">Sync all files (even if they are up to date)</label></div>
 		</div>
 		<p class="submit"><input type="submit" name="submit" class="button-primary" value="Sync" /></p>
 	</form>
