@@ -1,2 +1,5 @@
 .cst-specific-options table{display:none;}
 .cst-progress{padding-top:50px;}
+.cst-sync-options{border:2px solid #DDDDDD;width:150px;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;-moz-background-clip:padding;-webkit-background-clip:padding-box;background-clip:padding-box;margin-top:20px;}
+.cst-sync-options-input{display:block;padding:5px;}
+.cst-sync-options-input input{margin-right:10px;}
