@@ -123,19 +123,23 @@ class Cst {
 
 			$changedate = filemtime($file);
 
-			if (isset($row) && $changedate == $row->changedate) {
-				echo 'not changed';
-			} else {
+			if (!empty($row) && $changedate != $row->changedate) {
+				$wpdb->update(
+					CST_TABLE_FILES,
+					array('changedate' => $changedate, 'synced' => '0'),
+					array('remote_path' => $remotePath)
+				);
+			} else if (!isset($row) || empty($row)) {
 				$wpdb->insert(
 					CST_TABLE_FILES,
 					array(
-						'file_dir' => $file,
-						'remote_path' => $remotePath,
-						'changedate' => filemtime($file),
-						'synced' => '0'
+	        			'file_dir' => $file,
+	      			    'remote_path' => $remotePath,
+	    			    'changedate' => filemtime($file),
+	   	 			    'synced' => '0'
 					)
 				);
-			}	
+			}
 		}
 	}
 
