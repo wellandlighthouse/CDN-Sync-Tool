@@ -16,6 +16,7 @@ define('CST_URL', admin_url('options-general.php'));
 define('CST_FILE', __FILE__);
 define('CST_TABLE_FILES', $wpdb->get_blog_prefix().'cst_files');
 
+
 if (is_admin()) {
 	require_once CST_DIR.'lib/Cst.php';
 	$core = new Cst();
@@ -29,6 +30,7 @@ function cst_install() {
 		  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 		  `file_dir` text NOT NULL,
 		  `remote_path` text NOT NULL,
+		  `changedate` int(11) DEFAULT NULL,
 		  `synced` tinyint(1) NOT NULL,
 		  PRIMARY KEY (`id`)
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8;

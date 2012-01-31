@@ -51,6 +51,7 @@ class Cst {
 				$cfAuth = new CF_Authentication(get_option('cst-cf-username'), get_option('cst-cf-api'));
 				$cfAuth->authenticate();
 				$this->cdnConnection = new CF_Connection($cfAuth);
+				$this->cdnConnection = $this->cdnConnection->create_container(get_option('cst-cf-container'));
 			} catch (Exception $e) {
 				CST_Page::$messages[] = 'Cloudfiles connection error, please check details.';
 			}
@@ -88,7 +89,12 @@ class Cst {
 			// Uploads files
 			ftp_put($this->cdnConnection, $filename, $file, FTP_ASCII);
 		} else if ($this->connectionType == 'Cloudfiles') {
-			echo 'cloudfiles uploading....';
+			require_once CST_DIR.'etc/mime.php';
+			global $mime_types;
+			$object = $this->cdnConnection->create_object($remotePath);
+			$extension = pathinfo($file, PATHINFO_EXTENSION);
+			$object->content_type = $mime_types[$extension];
+			$result = $object->load_from_filename($file);
 		}
 	}
 
@@ -113,14 +119,23 @@ class Cst {
 				$remotePath = 'wp-includes'.$remotePath[1];
 			}
 
-			$wpdb->insert(
-				CST_TABLE_FILES,
-				array(
-					'file_dir' => $file,
-					'remote_path' => $remotePath,
-					'synced' => '0'
-				)
-			);
+			$row = $wpdb->get_row("SELECT * FROM `".CST_TABLE_FILES."` WHERE `remote_path` = '".$remotePath."'");
+
+			$changedate = filemtime($file);
+
+			if (isset($row) && $changedate == $row->changedate) {
+				echo 'not changed';
+			} else {
+				$wpdb->insert(
+					CST_TABLE_FILES,
+					array(
+						'file_dir' => $file,
+						'remote_path' => $remotePath,
+						'changedate' => filemtime($file),
+						'synced' => '0'
+					)
+				);
+			}	
 		}
 	}
 
