@@ -104,9 +104,19 @@ class Cst {
 	 */
 	private function findFiles() {
 		global $wpdb;
-		$files = $this->getDirectoryFiles(array(get_template_directory(),get_stylesheet_directory(),ABSPATH.'wp-includes'));
-		$mediaFiles = $this->getMediaFiles();
-		$files = array_merge($files, $mediaFiles);
+		$files = array();
+		if (isset($_POST['cst-options']['syncfiles']['cssjs']))
+			$files[] = get_stylesheet_directory();
+		if (isset($_POST['cst-options']['syncfiles']['theme']))
+			$files[] = get_template_directory();
+		if (isset($_POST['cst-options']['syncfiles']['media'])) {
+			$files[] = ABSPATH.'wp-includes';
+			$mediaFiles = $this->getMediaFiles();
+		}
+
+		$files = $this->getDirectoryFiles($files);
+		if (isset($_POST['cst-options']['syncfiles']['media']))
+			$files = array_merge($files, $mediaFiles);
 		
 		// Adds file to db
 		foreach($files as $file) {
