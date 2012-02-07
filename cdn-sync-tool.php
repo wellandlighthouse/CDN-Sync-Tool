@@ -36,6 +36,7 @@ function cst_install() {
 		) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 	");
 
+	update_option('cst-js-savepath', 'wp-content/uploads')
 	wp_schedule_event(time(), 'hourly', 'cron_cst_sync');
 }
 

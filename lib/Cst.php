@@ -98,6 +98,18 @@ class Cst {
 		}
 	}
 
+	private function combineFiles($files, $type, $savePath) {
+		$savePath = ABSPATH.$savePath.'/cst-combined.'.$type;
+		if (file_exists($savePath)) {
+			unlink($savePath);
+		}
+		foreach ($files as $file) {
+			if (pathinfo($file, PATHINFO_EXTENSION) == $type) {
+				file_put_contents($savePath, file_get_contents($file)."\r\n", FILE_APPEND);
+			}
+		}
+	}
+
 	/**
 	 * Finds all the files that need syncing and add to database
 	 * 
@@ -115,6 +127,11 @@ class Cst {
 		}
 
 		$files = $this->getDirectoryFiles($files);
+
+		if (get_option('cst-js-combine') == 'yes') {
+			$this->combineFiles($files, 'js', get_option('cst-js-savepath'));
+		}
+
 		if (isset($_POST['cst-options']['syncfiles']['media']))
 			$files = array_merge($files, $mediaFiles);
 		
