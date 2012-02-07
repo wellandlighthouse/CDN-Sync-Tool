@@ -10,16 +10,12 @@
 			<a class="nav-tab <?php if (isset($_GET['section']) && $_GET['section'] == 'help') { echo 'nav-tab-active'; } ?>" href="<?php echo CST_URL.'?page=cst&amp;section=help'; ?>">Help</a>
 		</h2>
 	</div>
-
-	<?php if (isset($_GET['section']) && $_GET['section'] == 'js') { ?>
-		<div class="cst-js">
-			<p>JS Stuffs</p>
-		</div>
-	<?php } else if (isset($_GET['section']) && $_GET['section'] == 'css') { ?>
-		<div class="cst-css">
-			<p>CSS Stuffs</p>
-		</div>
-	<?php } else if (isset($_GET['section']) && $_GET['section'] == 'cdn') {
+<?php
+	if (isset($_GET['section']) && $_GET['section'] == 'js') {
+		require_once CST_DIR.'pages/options/js.php';
+	} else if (isset($_GET['section']) && $_GET['section'] == 'css') { 
+		require_once CST_DIR.'pages/options/css.php';
+	} else if (isset($_GET['section']) && $_GET['section'] == 'cdn') {
 		require_once CST_DIR.'pages/options/cdn.php';
 	} else if (isset($_GET['section']) && $_GET['section'] == 'help') {
 		require_once CST_DIR.'pages/options/help.php';
