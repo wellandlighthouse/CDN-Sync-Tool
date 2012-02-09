@@ -98,6 +98,13 @@ class Cst {
 		}
 	}
 
+	/**
+ 	* Concatenates the passed files and saves to specified file
+ 	* 
+ 	* @param $files array of file paths to combine
+ 	* @param $type string file extension
+ 	* @param $savePath string path to folder of where to save the combined file
+ 	*/
 	private function combineFiles($files, $type, $savePath) {
 		$savePath = ABSPATH.$savePath.'/cst-combined.'.$type;
 		if (file_exists($savePath)) {
