@@ -138,16 +138,28 @@ class Cst {
 		// Combine files if required
 		if (get_option('cst-js-combine') == 'yes') {
 			$this->combineFiles($files, 'js', get_option('cst-js-savepath'));
-			$files[] = $this->getDirectoryFiles(get_option('cst-js-savepath').'cst-combined.js');
-		}
-		if (get_option('cst-css-combine') == 'yes') {
-			$this->combineFiles($files, 'css', get_option('cst-css-savepath'));
-			$files[] = $this->getDirectoryFiles(get_option('cst-css-savepath').'cst-combined.css');
 		}
 
-		if (isset($_POST['cst-options']['syncfiles']['media']))
+		if (get_option('cst-css-combine') == 'yes') {
+			$this->combineFiles($files, 'css', get_option('cst-css-savepath'));
+		}
+
+		if (get_option('cst-js-combine') == 'yes' || get_option('cst-css-combine') == 'yes') {
+			if (get_option('cst-css-combine') != get_option('cst-js-combine')) {
+				$combinedCssJs[] = ABSPATH.get_option('cst-js-savepath');
+				$combinedCssJs[] = ABSPATH.get_option('cst-css-savepath');
+			} else {
+				$combinedCssJs[] = ABSPATH.get_option('cst-js-savepath');
+			}
+			$combinedCssJs = $this->getDirectoryFiles($combinedCssJs);
+		}
+
+		if (isset($_POST['cst-options']['syncfiles']['media'])) {
 			$files = array_merge($files, $mediaFiles);
-		
+			if (isset($combinedCssJs) && !empty($combinedCssJs))
+				$files = array_merge($files, $combinedCssJs);
+		}
+
 		// Adds file to db
 		foreach($files as $file) {
 
@@ -163,7 +175,7 @@ class Cst {
 
 			$changedate = filemtime($file);
 
-			if ((!empty($row) && $changedate != $row->changedate) || (isset($_POST['cst-options']['syncall']))) {
+			if ((!empty($row) && $changedate != $row->changedate) || (isset($_POST['cst-options']['syncall']) && $row != NULL)) {
 				$wpdb->update(
 					CST_TABLE_FILES,
 					array('changedate' => $changedate, 'synced' => '0'),
