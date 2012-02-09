@@ -135,8 +135,14 @@ class Cst {
 
 		$files = $this->getDirectoryFiles($files);
 
+		// Combine files if required
 		if (get_option('cst-js-combine') == 'yes') {
 			$this->combineFiles($files, 'js', get_option('cst-js-savepath'));
+			$files[] = $this->getDirectoryFiles(get_option('cst-js-savepath').'cst-combined.js');
+		}
+		if (get_option('cst-css-combine') == 'yes') {
+			$this->combineFiles($files, 'css', get_option('cst-css-savepath'));
+			$files[] = $this->getDirectoryFiles(get_option('cst-css-savepath').'cst-combined.css');
 		}
 
 		if (isset($_POST['cst-options']['syncfiles']['media']))
