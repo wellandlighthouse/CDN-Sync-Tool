@@ -69,7 +69,9 @@ class CST_Page_Options extends CST_Page {
 					update_option($key, $value);
 				}
 			} else if ($form == 'css') {
-				// CSS FORM SUBMITTED
+				foreach($_POST['options'] as $key => $value) {
+					update_option($key, $value);
+				}
 			}
 		} else {
 			_e('Security error');
