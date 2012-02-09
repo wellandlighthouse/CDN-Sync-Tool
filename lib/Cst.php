@@ -99,6 +99,36 @@ class Cst {
 	}
 
 	/**
+	 * Sends $file to Google Closure Compiler
+	 * 
+	 * @param $file string absolute path to file to be minified
+	 * @return $response string the resulting minified code or an error
+	 */
+	private function minifyFile($file) {
+		$js = file_get_contents($file);
+		$data = 'output_info=compiled_code&js_code='.$js;
+		$url = 'http://closure-compiler.appspot.com/compile';
+		$optional_headers = NULL;
+		$params = array('http' => array(
+              'method' => 'POST',
+              'content' => $data
+            ));
+		if ($optional_headers !== null) {
+			$params['http']['header'] = $optional_headers;
+		}
+		$ctx = stream_context_create($params);
+		$fp = @fopen($url, 'rb', false, $ctx);
+		if (!$fp) {
+			throw new Exception("Problem with $url, $php_errormsg");
+		}
+		$response = @stream_get_contents($fp);
+		if ($response === false) {
+			throw new Exception("Problem reading data from $url, $php_errormsg");
+		}
+		return $response;
+	}
+
+	/**
  	* Concatenates the passed files and saves to specified file
  	* 
  	* @param $files array of file paths to combine
@@ -158,6 +188,19 @@ class Cst {
 			$files = array_merge($files, $mediaFiles);
 			if (isset($combinedCssJs) && !empty($combinedCssJs))
 				$files = array_merge($files, $combinedCssJs);
+		}
+
+		if (get_option('cst-js-minify') == 'yes') {
+			if (get_option('cst-js-combine') == 'yes' && file_exists(ABSPATH.get_option('cst-js-savepath').'/cst-combined.js')) {
+				$this->minifyFile(ABSPATH.get_option('cst-js-savepath').'/cst-combined.js');
+			} else {
+				foreach ($files as $file) {
+					if (pathinfo($file, PATHINFO_EXTENSION) == 'js') {
+						file_put_contents(ABSPATH.get_option('cst-js-savepath').'/'.pathinfo($file, PATHINFO_FILENAME).'.min.js', $this->minifyFile($file));
+						$files[] = ABSPATH.get_option('cst-js-savepath').'/'.pathinfo($file, PATHINFO_FILENAME).'.min.js';
+					}
+				}
+			}
 		}
 
 		// Adds file to db
