@@ -16,6 +16,13 @@
 					</td>
 					<td><strong>Relative to WordPress root directory (no leading or trailing '/')</strong></td>
 				</tr>
+				<tr valign="top">
+					<th scope="row"><label>Exclude CSS files from combination/minification</label></th>
+					<td>
+						<textarea id="cst-css-exclude" name="options[cst-css-exclude]" rows="5" cols="50"><?php $fileslist = get_option('cst-css-exclude'); $fileslist = str_replace(',', "\n", $fileslist); echo $fileslist; ?></textarea>
+					</td>
+					<td><strong>Each file on new line. Exact path relative to site root <em>(e.g. wp-content/css/style.css)</em></strong></td>
+				</tr>
 			</tbody>
 		</table>
 		<input type="hidden" name="form" value="cst-css" />
