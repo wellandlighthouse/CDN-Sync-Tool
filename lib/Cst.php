@@ -129,6 +129,26 @@ class Cst {
 	}
 
 	/**
+	 * Checks if the file is in the excluded files array
+	 * 
+	 * @param $type string either 'js' or 'css'
+	 * @param $file string path of file relative to site root
+	 * @return boolean
+	 */
+	private function checkIfExcluded($type, $file) {
+		$excludedFiles = get_option('cst-'.$type.'-exclude');
+		$excludedFiles = explode(",", $excludedFiles);
+		foreach ($excludedFiles as &$excludedFile) {
+			$excludedFile = ABSPATH . $excludedFile;
+		}
+		if (in_array($file, $excludedFiles)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
  	* Concatenates the passed files and saves to specified file
  	* 
  	* @param $files array of file paths to combine
@@ -141,7 +161,7 @@ class Cst {
 			unlink($savePath);
 		}
 		foreach ($files as $file) {
-			if (pathinfo($file, PATHINFO_EXTENSION) == $type) {
+			if (pathinfo($file, PATHINFO_EXTENSION) == $type && !self::checkIfExcluded($type, $file)) {
 				file_put_contents($savePath, file_get_contents($file)."\r\n", FILE_APPEND);
 			}
 		}
@@ -192,10 +212,11 @@ class Cst {
 
 		if (get_option('cst-js-minify') == 'yes') {
 			if (get_option('cst-js-combine') == 'yes' && file_exists(ABSPATH.get_option('cst-js-savepath').'/cst-combined.js')) {
+				// If JS is combined then only bother minifying that one
 				$this->minifyFile(ABSPATH.get_option('cst-js-savepath').'/cst-combined.js');
 			} else {
 				foreach ($files as $file) {
-					if (pathinfo($file, PATHINFO_EXTENSION) == 'js') {
+					if (pathinfo($file, PATHINFO_EXTENSION) == 'js' && !self::checkIfExcluded('js', $file)) {
 						file_put_contents(ABSPATH.get_option('cst-js-savepath').'/'.pathinfo($file, PATHINFO_FILENAME).'.min.js', $this->minifyFile($file));
 						$files[] = ABSPATH.get_option('cst-js-savepath').'/'.pathinfo($file, PATHINFO_FILENAME).'.min.js';
 					}

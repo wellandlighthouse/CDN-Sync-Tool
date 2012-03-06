@@ -66,6 +66,18 @@ class CST_Page_Options extends CST_Page {
 				}
 			} else if ($form == 'js') {
 				foreach($_POST['options'] as $key => $value) {
+					if ($key == 'cst-js-exclude' && !empty($value)) {
+						// Change new lines to csv list
+						$value = explode("\n", $value);
+						$fileslist = '';
+						foreach($value as $file) {
+							$filename = trim($file);
+							if (!empty($filename)) {
+								$fileslist .= $filename . ',';
+							}
+						}
+						$value = rtrim($fileslist, ','); // Drop last comma
+					}
 					update_option($key, $value);
 				}
 			} else if ($form == 'css') {

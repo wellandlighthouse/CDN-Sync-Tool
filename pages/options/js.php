@@ -21,6 +21,15 @@
 					<td>
 						<input type="radio" value="yes" id="cst-js-minify-yes" name="options[cst-js-minify]" <?php if (get_option('cst-js-minify') == 'yes') { echo 'checked="checked"'; }?> /><label for="cst-js-minify-yes" class="cst-inline-label">Yes</label>
 						<input type="radio" value="no" id="cst-js-minify-no" name="options[cst-js-minify]" <?php if (get_option('cst-js-minify') == 'no') { echo 'checked="checked"'; }?> /><label for="cst-js-minify-no" class="cst-inline-label">No</label>
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row"><label>Exclude JS files from combination/minification</label></th>
+					<td>
+						<textarea id="cst-js-exclude" name="options[cst-js-exclude]" rows="5" cols="50"><?php $fileslist = get_option('cst-js-exclude'); $fileslist = str_replace(',', "\n", $fileslist); echo $fileslist; ?></textarea>
+					</td>
+					<td><strong>Each file on new line. Exact path relative to site root <em>(e.g. wp-content/js/main.js)</em></strong></td>
+				</tr>
 			</tbody>
 		</table>
 		<input type="hidden" name="form" value="cst-js" />
