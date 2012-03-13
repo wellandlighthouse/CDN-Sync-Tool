@@ -27,6 +27,14 @@ class CST_Page_Options extends CST_Page {
 			} 
 			
 		}
+		if (isset($_POST['email']) && is_array($_POST['email'])) {
+			if (self::_submitEmail()) {
+				$GLOBALS['emailSent'] = true;
+			} else {
+				parent::$messages[] = 'Email sending failed. Try again?';
+			}
+
+		}
 		if (isset($_POST['form']) && $_POST['form'] == 'cst-sync') {
 			$GLOBALS['core']->syncFiles();
 		} else {
@@ -100,6 +108,31 @@ class CST_Page_Options extends CST_Page {
 		} else {
 			_e('Security error');
 			die;
+		}
+	}
+
+	/**
+	 * Sends the email to the support team
+	 * 
+	 * @return boolean if the email was sent successfully
+	 */
+	private function _submitEmail() {
+		$fromEmail = get_option('admin_email');
+
+		$headers = 'From: CST Contact Form <'.$fromEmail.'>' . "\r\n";
+		$headers .= 'Reply-To: '.trim($_POST['email']['name']).' <'.$_POST['email']['email'].'>\r\n';
+
+		$message = 'From: '.trim($_POST['email']['name']).' <'.$fromEmail.'>'.PHP_EOL;
+		$message .= 'CST Version: '.CST_VERSION.PHP_EOL;
+		$message .= 'PHP Version: '.PHP_VERSION.PHP_EOL;
+		$message .= 'WordPress Version: '.get_bloginfo('version').PHP_EOL;
+		$message .= 'Site URL: '.get_bloginfo('url').PHP_EOL;
+		$message .= 'Message: '.htmlentities($_POST['email']['message']).PHP_EOL;
+
+		if (wp_mail(CST_CONTACT_EMAIL,$_POST['email']['reason'], $message, $headers)){
+			return true;
+		} else {
+			return false;
 		}
 	}
 }
