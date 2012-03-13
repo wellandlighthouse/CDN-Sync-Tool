@@ -1,6 +1,5 @@
 <div class="cst-help">
-	<p>If you are having issues with the plugin then please submit a bug report on the <a href="https://github.com/fubralimited/CDN-Sync-Tool">CST GitHub page</a>.</p>
-	<p>Otherwise feel free to send an email to the support team using the form provided below.</p>
+	<p>Feel free to send an email to the support team using the form provided below.</p>
 	
 	<?php if (isset($GLOBALS['emailSent']) && $GLOBALS['emailSent'] == true) { ?>
 		<p>Sent</p>
