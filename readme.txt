@@ -104,6 +104,10 @@ The difference is that with Origin Pull the files are pulled from your web host 
 
 == CHANGELOG ==
 
+= 2.0.1 =
+
+* Bug fixes for S3
+
 = 2.0 =
 
 * Complete rewrite of the plugin

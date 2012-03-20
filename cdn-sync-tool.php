@@ -48,8 +48,8 @@ function cst_install() {
 				update_option('cst-ftp-port', $cdnOptions['port']);
 			if (isset($cdnOptions['directory']))
 				update_option('cst-ftp-dir', $cdnOptions['directory']);
-
 		}
+		delete_option('cst_cdn');
 	}
 
 	$wpdb->query("
