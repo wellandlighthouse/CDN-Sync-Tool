@@ -48,6 +48,14 @@ function cst_install() {
 				update_option('cst-ftp-port', $cdnOptions['port']);
 			if (isset($cdnOptions['directory']))
 				update_option('cst-ftp-dir', $cdnOptions['directory']);
+		} else if ($cdnOptions['provider'] == 'cf') {
+			update_option('cst-cdn', 'Cloudfiles');
+			if (isset($cdnOptions['username']))
+				update_option('cst-cf-username', $cdnOptions['username']);
+			if (isset($cdnOptions['apikey']))
+				update_option('cst-cf-api', $cdnOptions['apikey']);
+			if (isset($cdnOptions['container']))
+				update_option('cst-cf-container', $cdnOptions['container']);
 		}
 		delete_option('cst_cdn');
 	}
