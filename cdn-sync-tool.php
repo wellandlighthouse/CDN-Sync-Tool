@@ -28,14 +28,28 @@ function cst_install() {
 
 	if (get_option('cst_cdn')) {
 		$cdnOptions = get_option('cst_cdn');
-		if ($cdnOptions['provider'] == 'aws')
+		if ($cdnOptions['provider'] == 'aws') {
 			update_option('cst-cdn', 'S3');
-		if (isset($cdnOptions['access']))
-			update_option('cst-s3-accesskey', $cdnOptions['access']);
-		if (isset($cdnOptions['secret']))
-			update_option('cst-s3-secretkey', $cdnOptions['secret']);
-		if (isset($cdnOptions['bucket_name']))
-			update_option('cst-s3-bucket', $cdnOptions['bucket_name']);
+			if (isset($cdnOptions['access']))
+				update_option('cst-s3-accesskey', $cdnOptions['access']);
+			if (isset($cdnOptions['secret']))
+				update_option('cst-s3-secretkey', $cdnOptions['secret']);
+			if (isset($cdnOptions['bucket_name']))
+				update_option('cst-s3-bucket', $cdnOptions['bucket_name']);
+		} else if ($cdnOptions['provider'] == 'ftp') {
+			update_option('cst-cdn', 'FTP');
+			if (isset($cdnOptions['username']))
+				update_option('cst-ftp-username', $cdnOptions['username']);
+			if (isset($cdnOptions['password']))
+				update_option('cst-ftp-password', $cdnOptions['password']);
+			if (isset($cdnOptions['server']))
+				update_option('cst-ftp-server', $cdnOptions['server']);
+			if (isset($cdnOptions['port']))
+				update_option('cst-ftp-port', $cdnOptions['port']);
+			if (isset($cdnOptions['directory']))
+				update_option('cst-ftp-dir', $cdnOptions['directory']);
+
+		}
 	}
 
 	$wpdb->query("
