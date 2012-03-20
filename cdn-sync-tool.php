@@ -26,6 +26,18 @@ if (is_admin()) {
 function cst_install() {
 	global $wpdb;
 
+	if (get_option('cst_cdn')) {
+		$cdnOptions = get_option('cst_cdn');
+		if ($cdnOptions['provider'] == 'aws')
+			update_option('cst-cdn', 'S3');
+		if (isset($cdnOptions['access']))
+			update_option('cst-s3-accesskey', $cdnOptions['access']);
+		if (isset($cdnOptions['secret']))
+			update_option('cst-s3-secretkey', $cdnOptions['secret']);
+		if (isset($cdnOptions['bucket_name']))
+			update_option('cst-s3-bucket', $cdnOptions['bucket_name']);
+	}
+
 	$wpdb->query("
 		CREATE TABLE IF NOT EXISTS ".CST_TABLE_FILES." (
 		  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
