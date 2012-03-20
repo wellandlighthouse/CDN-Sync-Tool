@@ -177,7 +177,6 @@ class Cst {
 	 * 
 	 */
 	private function findFiles() {
-		global $wpdb;
 		$files = array();
 		if (isset($_POST['cst-options']['syncfiles']['cssjs']))
 			$files[] = get_stylesheet_directory();
@@ -228,6 +227,16 @@ class Cst {
 				}
 			}
 		}
+		self::_addFilesToDb($files);
+	}
+
+	/**
+	 * Adds the files to the database
+	 * 
+	 * @param $files array of file paths
+	 */
+	private function _addFilesToDb($files) {
+		global $wpdb;
 
 		// Adds file to db
 		foreach($files as $file) {
@@ -238,6 +247,9 @@ class Cst {
 			} else if (stristr($file, 'wp-includes')) {
 				$remotePath = preg_split('$wp-includes$', $file);
 				$remotePath = 'wp-includes'.$remotePath[1];
+			} else if (stristr($file, ABSPATH)) {
+				$remotePath = preg_split('$'.ABSPATH.'$', $file);
+				$remotePath = $remotePath[1];
 			}
 
 			$row = $wpdb->get_row("SELECT * FROM `".CST_TABLE_FILES."` WHERE `remote_path` = '".$remotePath."'");
@@ -305,6 +317,12 @@ class Cst {
 	 */
 	public function syncCustomDirectory($dirs) {
 		update_option('cst-custom-directories', serialize($dirs));
+		foreach ($dirs as &$dir) {
+			$dir = ABSPATH.$dir;
+		}
+		$files = self::getDirectoryFiles($dirs);
+		self::_addFilesToDb($files);
+		self::syncFiles();
 	}
 
 	/**
