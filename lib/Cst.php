@@ -299,6 +299,15 @@ class Cst {
 	}
 
 	/**
+	 * Sync a specified directory to the CDN
+	 * 
+	 * @param $dirs array of directories to sync relative to site root
+	 */
+	public function syncCustomDirectory($dirs) {
+		update_option('cst-custom-directories', serialize($dirs));
+	}
+
+	/**
  	 * Gets all media files
  	 * 
 	 */

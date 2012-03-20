@@ -37,6 +37,12 @@ class CST_Page_Options extends CST_Page {
 		}
 		if (isset($_POST['form']) && $_POST['form'] == 'cst-sync') {
 			$GLOBALS['core']->syncFiles();
+		} else if (isset($_POST['form']) && $_POST['form'] == 'cst-sync-custom') {
+			$dirs = explode("\n", $_POST['cst-custom-options']['files']);
+			foreach ($dirs as &$dir) {
+				$dir = trim($dir);
+			}
+			$GLOBALS['core']->syncCustomDirectory($dirs);
 		} else {
 			self::loadOptions();
 			self::displayPage('options');

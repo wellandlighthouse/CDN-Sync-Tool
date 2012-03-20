@@ -19,7 +19,7 @@
 		<div class="cst-sync-options">
 			<h3>Sync Custom Directory To CDN</h3>
 			<div class="cst-sync-options-input">
-				<textarea name="cst-custom-options[files]" id="cst-sync-custom-files" cols="30" rows="5"></textarea>
+				<textarea name="cst-custom-options[files]" id="cst-sync-custom-files" cols="30" rows="5"><?php if (get_option('cst-custom-directories')) { $dirs = unserialize(get_option('cst-custom-directories')); foreach ($dirs as $dir) { echo $dir."\n"; } } ?></textarea>
 				<p>One directory per line, relative to site root.</p>
 			</div>
 			<p class="submit"><input type="submit" name="submit" class="button-primary" value="Sync" /></p>
