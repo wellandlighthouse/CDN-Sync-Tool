@@ -68,7 +68,12 @@ class Cst {
 		if ($this->connectionType == 'S3') {
 			// Puts a file to the bucket
 			// putObjectFile(localName, bucketName, remoteName, ACL)
-			$this->cdnConnection->putObjectFile($file, 'ollie-armstrong-dev-test', $remotePath, S3::ACL_PUBLIC_READ);
+			$bucketName = get_option('cst-s3-bucket');
+			$buckets = $this->cdnConnection->listBuckets();
+			if (!in_array($bucketName, $buckets)) {
+				$this->cdnConnection->putBucket($bucketName);
+			}
+			$this->cdnConnection->putObjectFile($file, $bucketName, $remotePath, S3::ACL_PUBLIC_READ);
 		} else if ($this->connectionType == 'FTP') {
 			$initDir = get_option('cst-ftp-dir');
 			if ($initDir[0] != '/') {

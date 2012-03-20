@@ -27,6 +27,10 @@
 						<th scope="row"><label for="secretkey">Secret Key</label></th>
 						<td><input type="text" name="options[cst-s3-secretkey]" id="secretkey" <?php if (isset(self::$options['cst-s3-secretkey'])) {echo 'value="'.esc_attr(self::$options['cst-s3-secretkey']).'"'; } ?> /></td>
 					</tr>
+					<tr valign="top">
+						<th scope="row"><label for="s3-bucket">Bucket Name:</label></th>
+						<td><input type="text" name="options[cst-s3-bucket]" id="s3-bucket" <?php if (isset(self::$options['cst-s3-bucket'])) {echo 'value="'.esc_attr(self::$options['cst-s3-bucket']).'"'; } ?> /></td>
+					</tr>
 				</tbody>
 			</table>
 
