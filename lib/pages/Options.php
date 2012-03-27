@@ -127,7 +127,7 @@ class CST_Page_Options extends CST_Page {
 		$fromEmail = get_option('admin_email');
 
 		$headers = 'From: CST Contact Form <'.$fromEmail.'>' . "\r\n";
-		$headers .= 'Reply-To: '.trim($_POST['email']['name']).' <'.$_POST['email']['email'].'>\r\n';
+		$headers .= 'Reply-To: '.trim($_POST['email']['name']).' <'.$_POST['email']['email'].">\r\n";
 
 		$message = 'From: '.trim($_POST['email']['name']).' <'.$fromEmail.'>'.PHP_EOL;
 		$message .= 'CST Version: '.CST_VERSION.PHP_EOL;
