@@ -12,6 +12,10 @@
 						</select>
 					</td>
 				</tr>
+				<tr valign="top">
+					<th scope="row"><label for="cdn-hostname">Hostname of CDN</label></th>
+					<td><input type="text" name="options[ossdl_off_cdn_url]" id="cdn-hostname" <?php if (get_option('ossdl_off_cdn_url')) {echo 'value="'.esc_attr(get_option('ossdl_off_cdn_url')).'"'; } ?> /></td>
+				</tr>
 			</tbody>
 		</table>
 
