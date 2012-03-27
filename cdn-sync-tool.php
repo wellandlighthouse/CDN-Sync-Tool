@@ -14,7 +14,7 @@ define('CST_DIR', dirname(__FILE__).'/');
 define('CST_VERSION', '2.0.2');
 define('CST_URL', admin_url('options-general.php'));
 define('CST_FILE', __FILE__);
-define('CST_TABLE_FILES', $wpdb->get_blog_prefix().'cst_files');
+define('CST_TABLE_FILES', $wpdb->get_blog_prefix().'cst_new_files');
 define('CST_CONTACT_EMAIL', 'support@catn.com');
 
 
