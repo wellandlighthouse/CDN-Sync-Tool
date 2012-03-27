@@ -283,31 +283,36 @@ class Cst {
 	public function syncFiles() {
 		global $wpdb;
 
-		$this->findFiles();
-		
-		$filesToSync = $wpdb->get_results("SELECT * FROM `".CST_TABLE_FILES."` WHERE `synced` = '0'", ARRAY_A);
-		$total = count($filesToSync);
-		$i = 1;
-		echo '<div class="cst-progress">';	
-		echo '<h2>Syncing Files..</h2>';
-		foreach($filesToSync as $file) {
-			$this->pushFile($file['file_dir'], $file['remote_path']);
-			$padstr = str_pad("", 512, " ");
-			echo $padstr;
-			echo 'Syncing ['.$i.'/'.$total.'] '.$file['remote_path'].'<br />';
-			flush();
-			$i++;
-			$wpdb->update(
-				CST_TABLE_FILES,
-				array(
-					'synced' => '1'
-				),
-				array(
-					'id' => $file['id']
-				)
-			);
+		if ($this->connectionType == 'Origin') {
+			echo '<div class="cst-progress">Sync not required on origin pull CDNs.';
+		} else {
+			$this->findFiles();
+			
+			$filesToSync = $wpdb->get_results("SELECT * FROM `".CST_TABLE_FILES."` WHERE `synced` = '0'", ARRAY_A);
+			$total = count($filesToSync);
+			$i = 1;
+			echo '<div class="cst-progress">';	
+			echo '<h2>Syncing Files..</h2>';
+			foreach($filesToSync as $file) {
+				$this->pushFile($file['file_dir'], $file['remote_path']);
+				$padstr = str_pad("", 512, " ");
+				echo $padstr;
+				echo 'Syncing ['.$i.'/'.$total.'] '.$file['remote_path'].'<br />';
+				flush();
+				$i++;
+				$wpdb->update(
+					CST_TABLE_FILES,
+					array(
+						'synced' => '1'
+					),
+					array(
+						'id' => $file['id']
+					)
+				);
+			}
+			echo 'All files synced.';
 		}
-		echo 'All files synced</div>';
+		echo '<br /><br />Return to <a href="'.CST_URL.'?page=cst">CST Options</a>.</div>';
 	}
 
 	/**
