@@ -83,6 +83,15 @@ function hourlySync() {
 	$core->syncFiles();
 }
 
+function superCacheError() {
+	echo '<div class="error"><p>CDN Sync Tool requires <a href="http://wordpress.org/extend/plugins/wp-super-cache/" target="_blank">WP Super Cache</a>.</p></div>';
+}
+
 register_activation_hook(__FILE__, "cst_install");
 register_deactivation_hook(__FILE__, 'cst_deactivate');
 add_action('cron_cst_sync', 'hourlySync');
+
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+if (!is_plugin_active('wp-super-cache/wp-cache.php')) {
+	add_action('admin_notices', 'superCacheError');
+}
