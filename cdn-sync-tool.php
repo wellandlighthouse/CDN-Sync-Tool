@@ -80,7 +80,7 @@ function cst_deactivate() {
 }
 
 function hourlySync() {
-	$core->syncFiles();
+	$GLOBALS['core']->syncFiles();
 }
 
 function superCacheError() {
