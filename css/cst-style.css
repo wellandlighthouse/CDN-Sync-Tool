@@ -9,6 +9,7 @@
   overflow: auto;
   border: 1px solid #666;
   background-color: #DDD;
+  font-family: monospace;
 }
 .cst-sync-options {
   border: 2px solid #DDDDDD;
