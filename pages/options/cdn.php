@@ -7,7 +7,7 @@
 					<td>
 						<select id="cdn" name="options[cst-cdn]">
 							<option value="S3" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'S3') { echo 'selected="selected"'; } ?>>Amazon S3</option>
-							<option value="FTP" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'FTP') { echo 'selected="selected"'; } ?>>FTP</option>
+							<option value="FTP" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'FTP') { echo 'selected="selected"'; } ?>>(S)FTP</option>
 							<option value="Cloudfiles" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'Cloudfiles') { echo 'selected="selected"'; } ?>>Cloudfiles</option>
 							<option value="Origin" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'Origin') { echo 'selected="selected"'; } ?>>NetDNA/MaxCDN/Origin Pull</option>
 						</select>

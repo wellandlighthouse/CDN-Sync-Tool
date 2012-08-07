@@ -43,7 +43,7 @@ class Cst {
 				if ($connection === false) {
 					CST_Page::$messages[] = 'SFTP connection error, please check details.';
 				} else {
-					if (ssh2_auth_password($connection, get_option('cst-ftp-username'), get_option('cst-ftp-password'))) {
+					if (@ssh2_auth_password($connection, get_option('cst-ftp-username'), get_option('cst-ftp-password'))) {
 						$this->cdnConnection = $connection;
 					} else {
 						CST_Page::$messages[] = 'SFTP username/password authentication failed, please check details.';

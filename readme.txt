@@ -111,6 +111,7 @@ The difference is that with Origin Pull the files are pulled from your web host 
 * Fixed CDN connection being established on every admin page load
 * Added extra checks to ensure connection details are correct
 * Added ability to use the UK CloudFiles region
+* Added ability to use an SFTP server for CDN connection
 
 = 2.1 =
 
