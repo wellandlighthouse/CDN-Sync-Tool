@@ -78,6 +78,7 @@
 							<input type="radio" value="uk" name="options[cst-cf-region]" id="cst-cf-region-uk" <?php if (get_option('cst-cf-region') == 'uk') { echo 'checked="checked"'; }?> /><label for="cst-cf-region-uk" class="cst-inline-label">UK</label>
 							<input type="radio" value="us" name="options[cst-cf-region]" id="cst-cf-region-us" <?php if (get_option('cst-cf-region') == 'us') { echo 'checked="checked"'; }?> /><label for="cst-cf-region-us" class="cst-inline-label">US</label>
 						</td>
+						<td><strong>If you are unsure, you are likely US</strong></td>
 					</tr>
 					<tr valign="top">
 						<th scope="row"><label for="cf-api">API Key</label></th>
