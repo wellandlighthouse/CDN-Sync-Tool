@@ -73,6 +73,13 @@
 						<td><input type="text" name="options[cst-cf-username]" id="cf-username" <?php if (isset(self::$options['cst-cf-username'])) {echo 'value="'.esc_attr(self::$options['cst-cf-username']).'"'; } ?> /></td>
 					</tr>
 					<tr valign="top">
+						<th scope="row"><label for="cf-region">Region</label></th>
+						<td>
+							<input type="radio" value="uk" name="options[cst-cf-region]" id="cst-cf-region-uk" <?php if (get_option('cst-cf-region') == 'uk') { echo 'checked="checked"'; }?> /><label for="cst-cf-region-uk" class="cst-inline-label">UK</label>
+							<input type="radio" value="us" name="options[cst-cf-region]" id="cst-cf-region-us" <?php if (get_option('cst-cf-region') == 'us') { echo 'checked="checked"'; }?> /><label for="cst-cf-region-us" class="cst-inline-label">US</label>
+						</td>
+					</tr>
+					<tr valign="top">
 						<th scope="row"><label for="cf-api">API Key</label></th>
 						<td><input type="text" name="options[cst-cf-api]" id="cf-api" <?php if (isset(self::$options['cst-cf-api'])) {echo 'value="'.esc_attr(self::$options['cst-cf-api']).'"'; } ?> /></td>
 					</tr>
