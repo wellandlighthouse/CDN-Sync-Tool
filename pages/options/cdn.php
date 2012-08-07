@@ -86,6 +86,6 @@
 
 		<input type="hidden" name="form" value="cst-main" />
 		<?php wp_nonce_field('cst-nonce'); ?>
-		<p class="submit"><input type="submit" name="submit" class="button-primary" value="Save Changes" /></p>
+		<p class="submit"><input type="submit" name="submit" class="button-primary" value="Save and Test Changes" /></p>
 	</form>
 </div>

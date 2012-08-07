@@ -79,6 +79,9 @@ class CST_Page_Options extends CST_Page {
 				foreach($_POST['options'] as $key => $value) {
 					update_option($key, $value);
 				}
+				require_once CST_DIR.'lib/Cst.php';
+				$obj = new Cst();
+				$obj->testConnection();
 			} else if ($form == 'js') {
 				foreach($_POST['options'] as $key => $value) {
 					if ($key == 'cst-js-exclude' && !empty($value)) {
