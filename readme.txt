@@ -104,6 +104,10 @@ The difference is that with Origin Pull the files are pulled from your web host 
 
 == CHANGELOG ==
 
+= 2.2 =
+
+* Fixed the MIME types being incorrectly set for S3 uploads
+
 = 2.1 =
 
 * Rewritten the file finder to correctly recursively check directories
