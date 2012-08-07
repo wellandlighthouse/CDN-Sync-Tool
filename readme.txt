@@ -107,6 +107,7 @@ The difference is that with Origin Pull the files are pulled from your web host 
 = 2.2 =
 
 * Fixed the MIME types being incorrectly set for S3 uploads
+* Added ability to use the UK CloudFiles region
 
 = 2.1 =
 

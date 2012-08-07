@@ -48,7 +48,12 @@ class Cst {
 		} else if ($this->connectionType == 'Cloudfiles') {
 			require_once CST_DIR.'/lib/api/cloudfiles.php';
 			try {
-				$cfAuth = new CF_Authentication(get_option('cst-cf-username'), get_option('cst-cf-api'));
+				if (get_option('cst-cf-region') == 'uk') {
+					$region = UK_AUTHURL;
+				} else {
+					$region = US_AUTHURL;
+				}
+				$cfAuth = new CF_Authentication(get_option('cst-cf-username'), get_option('cst-cf-api'), NULL, $region);
 				$cfAuth->authenticate();
 				$this->cdnConnection = new CF_Connection($cfAuth);
 				$this->cdnConnection = $this->cdnConnection->create_container(get_option('cst-cf-container'));
