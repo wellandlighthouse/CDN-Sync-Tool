@@ -95,24 +95,29 @@ class Cst {
 			}
 			$this->cdnConnection->putObjectFile($file, $bucketName, $remotePath, S3::ACL_PUBLIC_READ);
 		} else if ($this->connectionType == 'FTP') {
-			$initDir = get_option('cst-ftp-dir');
-			if ($initDir[0] != '/') {
-				update_option('cst-ftp-dir', '/'.$initDir);
+			if (get_option('cst-ftp-sftp') == 'yes') {
+				// TODO: ensure directory exists (create if not)
+				ssh2_scp_send($this->cdnConnection, $file, get_option('cst-ftp-dir').'/'.$remotePath);
+			} else {
 				$initDir = get_option('cst-ftp-dir');
-			}
-			// Creates the directories
-			ftp_chdir($this->cdnConnection, $this->ftpHome.$initDir);
-			$remotePathExploded = explode('/', $remotePath);
-			$filename = array_pop($remotePathExploded);
-			foreach($remotePathExploded as $dir) {
-				$rawlist = ftp_rawlist($this->cdnConnection, $dir);
-				if (empty($rawlist)) {
-					ftp_mkdir($this->cdnConnection, $dir);
+				if ($initDir[0] != '/') {
+					update_option('cst-ftp-dir', '/'.$initDir);
+					$initDir = get_option('cst-ftp-dir');
 				}
-				ftp_chdir($this->cdnConnection, $dir);
+				// Creates the directories
+				ftp_chdir($this->cdnConnection, $this->ftpHome.$initDir);
+				$remotePathExploded = explode('/', $remotePath);
+				$filename = array_pop($remotePathExploded);
+				foreach($remotePathExploded as $dir) {
+					$rawlist = ftp_rawlist($this->cdnConnection, $dir);
+					if (empty($rawlist)) {
+						ftp_mkdir($this->cdnConnection, $dir);
+					}
+					ftp_chdir($this->cdnConnection, $dir);
+				}
+				// Uploads files
+				ftp_put($this->cdnConnection, $filename, $file, FTP_ASCII);
 			}
-			// Uploads files
-			ftp_put($this->cdnConnection, $filename, $file, FTP_ASCII);
 		} else if ($this->connectionType == 'Cloudfiles') {
 			require CST_DIR.'etc/mime.php';
 			$object = $this->cdnConnection->create_object($remotePath);
