@@ -283,6 +283,13 @@ class Cst {
 		global $wpdb;
 
 		$this->createConnection();
+
+		if (isset(CST_Page::$messages) && !empty(CST_Page::$messages)) {
+			foreach (CST_Page::$messages as $message) {
+				echo $message;
+			}
+			exit;
+		}
 		
 		if ($this->connectionType == 'Origin') {
 			echo '<div class="cst-progress">Sync not required on origin pull CDNs.';
