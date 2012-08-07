@@ -339,6 +339,13 @@ class Cst {
 	}
 
 	/**
+	 * Tests the CDN connection
+	 */
+	public function testConnection() {
+		self::createConnection();
+	}
+
+	/**
  	 * Gets all media files
  	 * 
 	 */
