@@ -14,7 +14,6 @@ class Cst {
 
 	function __construct() {
 		$this->connectionType = get_option('cst-cdn');
-		$this->createConnection();
 		add_action('admin_menu', array($this, 'createPages'));
 
 		// Create nonce
@@ -283,6 +282,8 @@ class Cst {
 	public function syncFiles() {
 		global $wpdb;
 
+		$this->createConnection();
+		
 		if ($this->connectionType == 'Origin') {
 			echo '<div class="cst-progress">Sync not required on origin pull CDNs.';
 		} else {
