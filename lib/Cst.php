@@ -101,8 +101,7 @@ class Cst {
 			// Uploads files
 			ftp_put($this->cdnConnection, $filename, $file, FTP_ASCII);
 		} else if ($this->connectionType == 'Cloudfiles') {
-			require_once CST_DIR.'etc/mime.php';
-			global $mime_types;
+			require CST_DIR.'etc/mime.php';
 			$object = $this->cdnConnection->create_object($remotePath);
 			$extension = pathinfo($file, PATHINFO_EXTENSION);
 			$object->content_type = $mime_types[$extension];
