@@ -36,7 +36,7 @@ class Cst {
 			$awsSecretKey = get_option('cst-s3-secretkey');
 			$this->cdnConnection = new S3($awsAccessKey, $awsSecretKey);
 		} else if ($this->connectionType == 'FTP') {
-			$this->cdnConnection = ftp_connect(get_option('cst-ftp-server'), get_option('cst-ftp-port'));
+			$this->cdnConnection = ftp_connect(get_option('cst-ftp-server'), get_option('cst-ftp-port'), 30);
 			if ($this->cdnConnection === false) {
 				CST_Page::$messages[] = 'FTP connection error, please check details.';
 			} else {
