@@ -43,6 +43,13 @@
 			<table class="form-table FTP">
 				<tbody>
 					<tr valign="top">
+						<th scope="row"><label for="cf-stfp">SFTP</label></th>
+						<td>
+							<input type="radio" value="yes" name="options[cst-ftp-sftp]" id="cst-ftp-sftp-yes" <?php if (get_option('cst-ftp-sftp') == 'yes') { echo 'checked="checked"'; }?> /><label for="cst-ftp-sftp-yes" class="cst-inline-label">Yes</label>
+							<input type="radio" value="no" name="options[cst-ftp-sftp]" id="cst-ftp-sftp-no" <?php if (get_option('cst-ftp-sftp') == 'no') { echo 'checked="checked"'; }?> /><label for="cst-ftp-sftp-no" class="cst-inline-label">No</label>
+						</td>
+					</tr>
+					<tr valign="top">
 						<th scope="row"><label for="ftp-server">Server</label></th>
 						<td><input type="text" name="options[cst-ftp-server]" id="ftp-server" <?php if (isset(self::$options['cst-ftp-server'])) {echo 'value="'.esc_attr(self::$options['cst-ftp-server']).'"'; } ?> /></td>
 					</tr>
