@@ -96,7 +96,12 @@ class Cst {
 			$this->cdnConnection->putObjectFile($file, $bucketName, $remotePath, S3::ACL_PUBLIC_READ);
 		} else if ($this->connectionType == 'FTP') {
 			if (get_option('cst-ftp-sftp') == 'yes') {
-				// TODO: ensure directory exists (create if not)
+				// Create directory for the file
+				$pathParts = explode('/', $remotePath);
+				$fileName = array_pop($pathParts);
+				$remoteDirectory = implode('/', $pathParts);
+				ssh2_sftp_mkdir(ssh2_sftp($this->cdnConnection), get_option('cst-ftp-dir').'/'.$remoteDirectory, 0777, true);
+
 				ssh2_scp_send($this->cdnConnection, $file, get_option('cst-ftp-dir').'/'.$remotePath);
 			} else {
 				$initDir = get_option('cst-ftp-dir');
