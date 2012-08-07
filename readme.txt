@@ -106,7 +106,7 @@ The difference is that with Origin Pull the files are pulled from your web host 
 
 = 2.2 =
 
-* Fixed the MIME types being incorrectly set for S3 uploads
+* Fixed the MIME types being incorrectly set for S3 and CloudFiles uploads
 * Fixed various issues with FTP connections
 * Fixed CDN connection being established on every admin page load
 * Added extra checks to ensure connection details are correct
