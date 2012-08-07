@@ -38,14 +38,27 @@ class Cst {
 				CST_page::$messages[] = 'S3 connection error, please check details';
 			}
 		} else if ($this->connectionType == 'FTP') {
-			$this->cdnConnection = ftp_connect(get_option('cst-ftp-server'), get_option('cst-ftp-port'), 30);
-			if ($this->cdnConnection === false) {
-				CST_Page::$messages[] = 'FTP connection error, please check details.';
-			} else {
-				if (ftp_login($this->cdnConnection, get_option('cst-ftp-username'), get_option('cst-ftp-password')) === false) {
-					CST_Page::$messages[] = 'FTP login error, please check details.';
+			if (get_option('cst-ftp-sftp') == 'yes') {
+				$connection = @ssh2_connect(get_option('cst-ftp-server'), get_option('cst-ftp-port'));
+				if ($connection === false) {
+					CST_Page::$messages[] = 'SFTP connection error, please check details.';
+				} else {
+					if (ssh2_auth_password($connection, get_option('cst-ftp-username'), get_option('cst-ftp-password'))) {
+						$this->cdnConnection = $connection;
+					} else {
+						CST_Page::$messages[] = 'SFTP username/password authentication failed, please check details.';
+					}
 				}
-				$this->ftpHome = ftp_pwd($this->cdnConnection);
+			} else {
+				$this->cdnConnection = ftp_connect(get_option('cst-ftp-server'), get_option('cst-ftp-port'), 30);
+				if ($this->cdnConnection === false) {
+					CST_Page::$messages[] = 'FTP connection error, please check details.';
+				} else {
+					if (ftp_login($this->cdnConnection, get_option('cst-ftp-username'), get_option('cst-ftp-password')) === false) {
+						CST_Page::$messages[] = 'FTP login error, please check details.';
+					}
+					$this->ftpHome = ftp_pwd($this->cdnConnection);
+				}
 			}
 		} else if ($this->connectionType == 'Cloudfiles') {
 			require_once CST_DIR.'/lib/api/cloudfiles.php';
