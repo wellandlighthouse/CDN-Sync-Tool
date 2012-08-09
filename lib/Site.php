@@ -18,12 +18,19 @@ class Cst_Site {
 	}
 
 	public function startOb() {
-		ob_start(array($this, 'combineFiles'));
+		ob_start(array($this, 'changeBuffer'));
 	}
 
 	public function stopOb() {
 		ob_end_flush();
 		return true;
+	}
+
+	public function changeBuffer($buffer) {
+		if (get_option('cst-css-combine') == 'yes') {
+			$buffer = $this->combineFiles($buffer);
+		}
+		return $buffer;
 	}
 
 	public function combineFiles($buffer) {
