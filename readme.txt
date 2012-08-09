@@ -106,6 +106,7 @@ The difference is that with Origin Pull the files are pulled from your web host 
 
 = 2.2 =
 
+* Fixed combination of JS/CSS
 * Fixed the MIME types being incorrectly set for S3 and CloudFiles uploads
 * Fixed various issues with FTP connections
 * Fixed CDN connection being established on every admin page load
@@ -285,6 +286,12 @@ The difference is that with Origin Pull the files are pulled from your web host 
 * Fixed typos
 
 == Upgrade Notice ==
+
+= 2.2 =
+
+* Lots of bug fixes
+* New JS/CSS combination method is a lot better
+* SFTP CDN support
 
 = 0.6 =
 
