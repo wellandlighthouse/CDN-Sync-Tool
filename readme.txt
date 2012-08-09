@@ -2,7 +2,7 @@
 Contributors: olliea95,Fubra,Backie,ray.viljoen
 Tags: CDN,content delivery network, sync, CDN sync, tool, Content, Upload, Files, Media, Optimization,cloudfront,cloud front,amazon s3,s3,cloudfiles,theme,MaxCDN,Origin Pull,Origin,Pull,files,speed,faster,accelerator,Page Load, zoom
 Tested up to: 3.1
-Stable tag: 2.1
+Stable tag: 2.2
 Requires At Least: 3.0
 Donate Link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=99WUGVV4HY5ZE&lc=GB&item_name=CATN%20Plugins-CDN&item_number=catn-cdn&currency_code=GBP&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted 
 
@@ -22,7 +22,7 @@ This plugin requires WP Super Cache to be installed. As it will handle the rewri
 
 Developed by <a href="http://www.catn.com">PHP Hosting Experts CatN</a>
 
-== Frequently Asked Questions ==
+== Frequently Asked Questions == 
 
 = Why should I care about fast loading web page? =
 
@@ -39,6 +39,10 @@ Yes, the plugin gzips javascript and css files and adds a gzip content-type head
 = Why do you upload static plugin files? =
 
 Because some plugins also have images and static files that need to be displayed on your site, we also want the plugin to work even if you decide not to use the concatenation functionality of the plugin.
+
+= JS/CSS files aren't combined properly? =
+
+You will need to delete the WP Super Cache cache before this works as it was changed in 2.2. This should only need to be done once. First page load after doing this will be really long, subsequent loads will be fast.
 
 = Why do you concatenation Javascript and CSS files when there are others plugins that do it? =
 
@@ -106,7 +110,7 @@ The difference is that with Origin Pull the files are pulled from your web host 
 
 = 2.2 =
 
-* Fixed combination of JS/CSS
+* Fixed combination of JS/CSS (delete WP Super Cache cache before this works correctly)
 * Fixed the MIME types being incorrectly set for S3 and CloudFiles uploads
 * Fixed various issues with FTP connections
 * Fixed CDN connection being established on every admin page load
@@ -292,6 +296,7 @@ The difference is that with Origin Pull the files are pulled from your web host 
 * Lots of bug fixes
 * New JS/CSS combination method is a lot better
 * SFTP CDN support
+* Note: after upgrade you will need to delete the WP Super Cache cache before combined JS/CSS files are correctly pulled - first page load will take a very long time as it combines and caches
 
 = 0.6 =
 
