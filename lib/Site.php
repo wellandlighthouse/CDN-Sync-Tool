@@ -28,23 +28,34 @@ class Cst_Site {
 
 	public function changeBuffer($buffer) {
 		if (get_option('cst-css-combine') == 'yes') {
-			$buffer = $this->combineFiles($buffer);
+			$buffer = $this->combineFiles($buffer, 'css');
 		}
 		return $buffer;
 	}
 
-	public function combineFiles($buffer) {
+	public function combineFiles($buffer, $filetype) {
 		$stylesheetCombined = '';
 		$stylesheets = array();
-		$exclude = get_option('cst-css-exclude');
-		// Find all stylesheet links
-		preg_match_all('$<link.*rel=[\'"]stylesheet[\'"].*?>$', $buffer, $stylesheets);
+		$exclude = get_option('cst-'.$filetype.'-exclude');
+
+		if ($filetype == 'css') {
+			// Find all stylesheet links
+			preg_match_all('$<link.*rel=[\'"]stylesheet[\'"].*?>$', $buffer, $stylesheets);
+		}
+
 		foreach ($stylesheets[0] as $stylesheet) {
 
-			// Get the filepath of the stylesheet
-			preg_match('$href=[\'"]'.get_bloginfo('wpurl').'(.*?)\??[\'"]$', $stylesheet, $href);
+			// Get the filepath
+			$regex = '$';
+			if ($filetype == 'css') {
+				$regex .= 'href';
+			} else {
+				$regex .= 'src';
+			}
+			$regex .= '=[\'"]'.get_bloginfo('wpurl').'(.*?)\??[\'"]$';
+			preg_match($regex, $stylesheet, $href);
 			$path = $href[1];
-			$path = preg_replace('$\.css(\?.*)$', '.css', $path);
+			$path = preg_replace('$\.'.$filetype.'(\?.*)$', '.'.$filetype, $path);
 			$path = ltrim($path, '/');
 
 			// Check if exclude
@@ -53,22 +64,24 @@ class Cst_Site {
 				continue;
 			}
 			
-			// Remove the stylesheet link from $buffer
+			// Remove the link from $buffer
 			$buffer = str_replace($stylesheet, '', $buffer);
 
 			$file = file_get_contents(ABSPATH.$path);
 
-			// Replace relative urls with absolute urls to cdn
-			$directory = str_replace(ABSPATH, '', dirname($path));
-			$urls = array();
-			preg_match_all('$url\((.*?)\)$', $file, $urls);
-			$i = 0;
-			foreach ($urls[1] as $url) {
-				if (preg_match('$https?://|data:$', $url))
-					continue;
-				$newurl = get_option('ossdl_off_cdn_url').'/'.$directory.'/'.$url;
-				$file = str_replace($urls[0][$i], 'url('.$newurl.')', $file);
-				$i++;
+			if ($filetype == 'css') {
+				// Replace relative urls with absolute urls to cdn
+				$directory = str_replace(ABSPATH, '', dirname($path));
+				$urls = array();
+				preg_match_all('$url\((.*?)\)$', $file, $urls);
+				$i = 0;
+				foreach ($urls[1] as $url) {
+					if (preg_match('$https?://|data:$', $url))
+						continue;
+					$newurl = get_option('ossdl_off_cdn_url').'/'.$directory.'/'.$url;
+					$file = str_replace($urls[0][$i], 'url('.$newurl.')', $file);
+					$i++;
+				}
 			}
 
 			$stylesheetCombined .= $file;
@@ -76,7 +89,7 @@ class Cst_Site {
 
 		// Create unique filename based on the md5 of the content
 		$hash = md5($stylesheetCombined);
-		$combinedFilename = ABSPATH.get_option('cst-css-savepath').'/'.$hash.'.css';
+		$combinedFilename = ABSPATH.get_option('cst-'.$filetype.'-savepath').'/'.$hash.'.'.$filetype;
 
 		if (!is_readable($combinedFilename)) {
 			// File needs saving and syncing
@@ -84,12 +97,14 @@ class Cst_Site {
 			require_once CST_DIR.'lib/Cst.php';
 			$core = new Cst;
 			$core->createConnection();
-			$core->pushFile($combinedFilename, get_option('cst-css-savepath').'/'.$hash.'.css');
+			$core->pushFile($combinedFilename, get_option('cst-'.$filetype.'-savepath').'/'.$hash.'.'.$filetype);
 		}
 		
 		// File can be loaded
-		$fileUrl = get_option('ossdl_off_cdn_url').'/'.get_option('cst-css-savepath').'/'.$hash.'.css';
-		$linkTag = '<link rel="stylesheet" type="text/css" href="'.$fileUrl.'" />';
+		$fileUrl = get_option('ossdl_off_cdn_url').'/'.get_option('cst-'.$filetype.'-savepath').'/'.$hash.'.'.$filetype;
+		if ($filetype == 'css') {
+			$linkTag = '<link rel="stylesheet" type="text/css" href="'.$fileUrl.'" />';
+		}
 		$buffer = preg_replace('$<head[^er]*>$', '<head>'.$linkTag, $buffer);
 
 		return $buffer;
