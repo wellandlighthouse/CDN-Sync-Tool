@@ -23,6 +23,17 @@
 						<input type="radio" value="no" id="cst-js-minify-no" name="options[cst-js-minify]" <?php if (get_option('cst-js-minify') == 'no') { echo 'checked="checked"'; }?> /><label for="cst-js-minify-no" class="cst-inline-label">No</label>
 					</td>
 				</tr>
+				<tr valign="top" class="js-opt-level" style="display: none;">
+					<th scope="row"><label>Optimisation level</label></th>
+					<td>
+						<select name="options[cst-js-optlevel]">
+						<option value="whitespace" <?php if (get_option('cst-js-optlevel') == 'whitespace') { echo 'selected="selected"'; } ?>>Whitespace Only</option>
+							<option value="simple" <?php if (get_option('cst-js-optlevel') == 'simple') { echo 'selected="selected"'; } ?>>Simple Optimisation</option>
+							<option value="advanced" <?php if (get_option('cst-js-optlevel') == 'advanced') { echo 'selected="selected"'; } ?>>Advanced Optimisation</option>
+						</select>
+					</td>
+					<td><strong>If you have issues with advanced/simple then try whitespace only.</strong></td>
+				</tr>
 				<tr valign="top">
 					<th scope="row"><label>Exclude JS files from combination/minification</label></th>
 					<td>

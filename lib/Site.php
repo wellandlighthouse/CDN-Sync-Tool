@@ -37,6 +37,9 @@ class Cst_Site {
 	}
 
 	public function combineFiles($buffer, $filetype) {
+		require_once CST_DIR.'lib/Cst.php';
+		$core = new Cst;
+
 		$stylesheetCombined = '';
 		$stylesheets = array();
 		$exclude = get_option('cst-'.$filetype.'-exclude');
@@ -89,6 +92,7 @@ class Cst_Site {
 				}
 			}
 
+
 			$stylesheetCombined .= $file;
 		}
 
@@ -97,10 +101,25 @@ class Cst_Site {
 		$combinedFilename = ABSPATH.get_option('cst-'.$filetype.'-savepath').'/'.$hash.'.'.$filetype;
 
 		if (!is_readable($combinedFilename)) {
+			if ($filetype == 'js' && get_option('cst-js-minify') == 'yes') {
+				// Do minification
+				switch (get_option('cst-js-optlevel')) {
+				case 'simple':
+					$complevel = 'SIMPLE_OPTIMIZATIONS';
+				case 'advanced':
+					$complevel = 'ADVANCED_OPTIMIZATIONS';
+				default:
+					$complevel = 'WHITESPACE_ONLY';
+				}
+				$ch = curl_init('http://closure-compiler.appspot.com/compile');
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_POST, 1);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, 'output_info=compiled_code&output_format=text&compilation_level='.$complevel.'&js_code='.urlencode($file));
+				$output = curl_exec($ch);
+				$stylesheetCombined = $output;
+			}
 			// File needs saving and syncing
 			file_put_contents($combinedFilename, $stylesheetCombined);
-			require_once CST_DIR.'lib/Cst.php';
-			$core = new Cst;
 			$core->createConnection();
 			$core->pushFile($combinedFilename, get_option('cst-'.$filetype.'-savepath').'/'.$hash.'.'.$filetype);
 		}
