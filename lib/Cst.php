@@ -27,7 +27,7 @@ class Cst {
 	 * Initialises the connection to the CDN
 	 * 
 	 */
-	private function createConnection() {
+	public function createConnection() {
 		require_once CST_DIR.'lib/pages/Options.php';
 		if ($this->connectionType == 'S3') {
 			require_once CST_DIR.'lib/api/S3.php';
@@ -84,7 +84,7 @@ class Cst {
 	 * @param $file string path to the file to push
 	 * @param $remotePath string path to the remote file
 	 */
-	private function pushFile($file, $remotePath) {
+	public function pushFile($file, $remotePath) {
 		if ($this->connectionType == 'S3') {
 			// Puts a file to the bucket
 			// putObjectFile(localName, bucketName, remoteName, ACL)

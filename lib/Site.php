@@ -81,7 +81,10 @@ class Cst_Site {
 		if (!is_readable($combinedFilename)) {
 			// File needs saving and syncing
 			file_put_contents($combinedFilename, $stylesheetCombined);
-			// TODO: sync file
+			require_once CST_DIR.'lib/Cst.php';
+			$core = new Cst;
+			$core->createConnection();
+			$core->pushFile($combinedFilename, get_option('cst-css-savepath').'/'.$hash.'.css');
 		} else {
 			// File can be loaded
 			$fileUrl = get_bloginfo('wpurl').'/'.get_option('cst-css-savepath').'/'.$hash.'.css';
