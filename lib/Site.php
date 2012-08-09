@@ -58,8 +58,18 @@ class Cst_Site {
 
 			$file = file_get_contents(ABSPATH.$path);
 
-			// TODO:
-			// * go through stylesheet and replace all urls with absolute paths
+			// Replace relative urls with absolute urls to cdn
+			$directory = str_replace(ABSPATH, '', dirname($path));
+			$urls = array();
+			preg_match_all('$url\((.*?)\)$', $file, $urls);
+			$i = 0;
+			foreach ($urls[1] as $url) {
+				if (preg_match('$https?://|data:$', $url))
+					continue;
+				$newurl = get_option('ossdl_off_cdn_url').'/'.$directory.'/'.$url;
+				$file = str_replace($urls[0][$i], 'url('.$newurl.')', $file);
+				$i++;
+			}
 
 			$stylesheetCombined .= $file;
 		}
