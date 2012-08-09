@@ -85,12 +85,12 @@ class Cst_Site {
 			$core = new Cst;
 			$core->createConnection();
 			$core->pushFile($combinedFilename, get_option('cst-css-savepath').'/'.$hash.'.css');
-		} else {
-			// File can be loaded
-			$fileUrl = get_bloginfo('wpurl').'/'.get_option('cst-css-savepath').'/'.$hash.'.css';
-			$linkTag = '<link rel="stylesheet" type="text/css" href="'.$fileUrl.'" />';
-			$buffer = preg_replace('$<head[^er]*>$', '<head>'.$linkTag, $buffer);
 		}
+		
+		// File can be loaded
+		$fileUrl = get_option('ossdl_off_cdn_url').'/'.get_option('cst-css-savepath').'/'.$hash.'.css';
+		$linkTag = '<link rel="stylesheet" type="text/css" href="'.$fileUrl.'" />';
+		$buffer = preg_replace('$<head[^er]*>$', '<head>'.$linkTag, $buffer);
 
 		return $buffer;
 	}
