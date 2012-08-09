@@ -29,23 +29,30 @@ class Cst_Site {
 	public function combineFiles($buffer) {
 		$stylesheetCombined = '';
 		$stylesheets = array();
+		$exclude = get_option('cst-css-exclude');
 		// Find all stylesheet links
 		preg_match_all('$<link.*rel=[\'"]stylesheet[\'"].*?>$', $buffer, $stylesheets);
 		foreach ($stylesheets[0] as $stylesheet) {
-			// Remove the stylesheet link from $buffer
-			$buffer = str_replace($stylesheet, '', $buffer);
 
 			// Get the filepath of the stylesheet
 			preg_match('$href=[\'"]'.get_bloginfo('wpurl').'(.*?)\??[\'"]$', $stylesheet, $href);
 			$path = $href[1];
 			$path = preg_replace('$\.css(\?.*)$', '.css', $path);
-			$path = ABSPATH.ltrim($path, '/');
+			$path = ltrim($path, '/');
 
-			$file = file_get_contents($path);
+			// Check if exclude
+			if (strpos($exclude, $path) !== false) {
+				// File is excluded so skip
+				continue;
+			}
+			
+			// Remove the stylesheet link from $buffer
+			$buffer = str_replace($stylesheet, '', $buffer);
+
+			$file = file_get_contents(ABSPATH.$path);
 
 			// TODO:
 			// * go through stylesheet and replace all urls with absolute paths
-			// * check file exclusion list
 
 			$stylesheetCombined .= $file;
 		}
