@@ -108,6 +108,10 @@ The difference is that with Origin Pull the files are pulled from your web host 
 
 == CHANGELOG ==
 
+= 2.2.1 =
+
+* Added automatically sync new media files
+
 = 2.2 =
 
 * Fixed combination of JS/CSS (delete WP Super Cache cache before this works correctly)
