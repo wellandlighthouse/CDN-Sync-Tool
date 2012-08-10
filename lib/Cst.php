@@ -21,6 +21,9 @@ class Cst {
 
 		// Enqueue files
 		add_action('admin_init', array($this, 'enqueueFiles'));
+
+		// Add action for image uploads
+		add_action('wp_generate_attachment_metadata', array($this, 'uploadMedia'));
 	}
 
 	/**
@@ -424,6 +427,20 @@ class Cst {
 
 		}
 		return $files;
+	}
+
+	public function uploadMedia($meta) {
+		self::createConnection();
+		$uploaddir = wp_upload_dir(); 
+		$uploaddir = $uploaddir['basedir'].'/';
+		self::pushFile($uploaddir.$meta['file'], str_replace(ABSPATH, '', $uploaddir).$meta['file']);
+		if (isset($meta['sizes']) && is_array($meta['sizes']) && !empty($meta['sizes'])) {
+			foreach($meta['sizes'] as $size) {
+				$dirname = dirname($meta['file']).'/';
+				self::pushFile($uploaddir.$dirname.$size['file'], str_replace(ABSPATH, '', $uploaddir).$dirname.$size['file']);
+			}
+		}
+		return $meta;
 	}
 
 	public function createNonce() {
