@@ -114,7 +114,7 @@ class Cst_Site {
 				$ch = curl_init('http://closure-compiler.appspot.com/compile');
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 				curl_setopt($ch, CURLOPT_POST, 1);
-				curl_setopt($ch, CURLOPT_POSTFIELDS, 'output_info=compiled_code&output_format=text&compilation_level='.$complevel.'&js_code='.urlencode($file));
+				curl_setopt($ch, CURLOPT_POSTFIELDS, 'output_info=compiled_code&output_format=text&compilation_level='.$complevel.'&js_code='.urlencode($stylesheetCombined));
 				$output = curl_exec($ch);
 				$stylesheetCombined = $output;
 			}
