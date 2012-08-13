@@ -14,7 +14,7 @@ class Cst_Site {
 
 	private function _addHooks() {
 		add_action('wp_loaded', array($this, 'startOb'));
-		add_action('wp_footer', array($this, 'stopOb'));
+		add_action('wp_footer', array($this, 'stopOb'), 1000);
 	}
 
 	public function startOb() {
