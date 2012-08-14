@@ -78,6 +78,18 @@ class Cst {
 			} catch (Exception $e) {
 				CST_Page::$messages[] = 'Cloudfiles connection error, please check details.';
 			}
+		} else if ($this->connectionType == 'Clodo') {
+			require_once CST_DIR.'/lib/api/clodo/cloudfiles.php';
+			try {
+				$region = CLODO_AUTHURL;
+				$cfAuth = new CF_Authentication(get_option('cst-clodo-username'), get_option('cst-clodo-api'));
+				$cfAuth->authenticate();
+				$this->cdnConnection = new CF_Connection($cfAuth);
+				$this->cdnConnection = $this->cdnConnection->create_container(get_option('cst-clodo-container'));
+			} catch (Exception $e) {
+				CST_Page::$messages[] = 'Cloudfiles connection error, please check details.';
+				var_dump($e);
+			}
 		}
 	}
 
