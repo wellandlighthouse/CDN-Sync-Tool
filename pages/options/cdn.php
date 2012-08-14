@@ -9,6 +9,7 @@
 							<option value="S3" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'S3') { echo 'selected="selected"'; } ?>>Amazon S3</option>
 							<option value="FTP" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'FTP') { echo 'selected="selected"'; } ?>>(S)FTP</option>
 							<option value="Cloudfiles" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'Cloudfiles') { echo 'selected="selected"'; } ?>>Cloudfiles</option>
+							<option value="Clodo" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'Clodo') { echo 'selected="selected"'; } ?>>Clodo Cloudstorage</option>
 							<option value="Origin" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'Origin') { echo 'selected="selected"'; } ?>>NetDNA/MaxCDN/Origin Pull</option>
 						</select>
 					</td>
@@ -94,6 +95,23 @@
 					<tr valign="top">
 						<th scope="row"><label for="cf-container">Container</label></th>
 						<td><input type="text" name="options[cst-cf-container]" id="cf-container" <?php if (isset(self::$options['cst-cf-container'])) {echo 'value="'.esc_attr(self::$options['cst-cf-container']).'"'; } ?> /></td>
+						<td><strong>If the container does not exist it will be created</strong></td>
+				</tbody>
+			</table>
+
+			<table class="form-table Clodo">
+				<tbody>
+					<tr valign="top">
+						<th scope="row"><label for="clodo-username">Username</label></th>
+						<td><input type="text" name="options[cst-clodo-username]" id="clodo-username" <?php if (isset(self::$options['cst-clodo-username'])) {echo 'value="'.esc_attr(self::$options['cst-clodo-username']).'"'; } ?> /></td>
+					</tr>
+					<tr valign="top">
+						<th scope="row"><label for="clodo-api">API Key</label></th>
+						<td><input type="text" name="options[cst-clodo-api]" id="clodo-api" <?php if (isset(self::$options['cst-clodo-api'])) {echo 'value="'.esc_attr(self::$options['cst-clodo-api']).'"'; } ?> /></td>
+					</tr>
+					<tr valign="top">
+						<th scope="row"><label for="clodo-container">Container</label></th>
+						<td><input type="text" name="options[cst-clodo-container]" id="clodo-container" <?php if (isset(self::$options['cst-clodo-container'])) {echo 'value="'.esc_attr(self::$options['cst-clodo-container']).'"'; } ?> /></td>
 						<td><strong>If the container does not exist it will be created</strong></td>
 				</tbody>
 			</table>

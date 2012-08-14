@@ -66,6 +66,10 @@ class CST_Page_Options extends CST_Page {
 		parent::$options['cst-cf-username'] = get_option('cst-cf-username');
 		parent::$options['cst-cf-api'] = get_option('cst-cf-api');
 		parent::$options['cst-cf-container'] = get_option('cst-cf-container');
+
+		parent::$options['cst-clodo-username'] = get_option('cst-clodo-username');
+		parent::$options['cst-clodo-api'] = get_option('cst-clodo-api');
+		parent::$options['cst-clodo-container'] = get_option('cst-clodo-container');
 	}
 
 	/**
