@@ -53,9 +53,14 @@ class Cst_Site {
 
 		foreach ($stylesheets[0] as $stylesheet) {
 
-			// Exclude external files; TODO: add as option
+			// Exclude external files
 			if (!preg_match('$'.site_url().'$', $stylesheet)) {
-				continue;
+				if (get_option('cst-'.$filetype.'-exclude-external') == 'yes') {
+					$external = false;
+					continue;
+				} else {
+					$external = true;
+				}
 			}
 
 			// Get the filepath
@@ -65,11 +70,18 @@ class Cst_Site {
 			} else {
 				$regex .= 'src';
 			}
-			$regex .= '=[\'"]'.get_bloginfo('wpurl').'(.*?)\??[\'"]$';
-			preg_match($regex, $stylesheet, $href);
-			$path = $href[1];
-			$path = preg_replace('$\.'.$filetype.'(\?.*)$', '.'.$filetype, $path);
-			$path = ltrim($path, '/');
+
+			if ($external == false) {
+				$regex .= '=[\'"]'.get_bloginfo('wpurl').'(.*?)\??[\'"]$';
+				preg_match($regex, $stylesheet, $href);
+				$path = $href[1];
+				$path = preg_replace('$\.'.$filetype.'(\?.*)$', '.'.$filetype, $path);
+				$path = ltrim($path, '/');
+			} else {
+				$regex .= '=[\'"](.*)?[\'"]$';
+				preg_match($regex, $stylesheet, $href);
+				$path = $href[1];
+			}
 
 			// Check if exclude
 			if (strpos($exclude, $path) !== false) {
@@ -80,7 +92,11 @@ class Cst_Site {
 			// Remove the link from $buffer
 			$buffer = str_replace($stylesheet, '', $buffer);
 
-			$file = file_get_contents(ABSPATH.$path);
+			if ($external == false) {
+				$file = file_get_contents(ABSPATH.$path);
+			} else {
+				$file = file_get_contents($path);
+			}
 
 			if ($filetype == 'css') {
 				// Replace relative urls with absolute urls to cdn
@@ -97,8 +113,7 @@ class Cst_Site {
 				}
 			}
 
-
-			$stylesheetCombined .= $file;
+			$stylesheetCombined .= PHP_EOL.$file;
 		}
 
 		// Create unique filename based on the md5 of the content
