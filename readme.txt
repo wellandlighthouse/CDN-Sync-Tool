@@ -112,6 +112,8 @@ The difference is that with Origin Pull the files are pulled from your web host 
 
 * Added automatically sync new media files
 * Fixed enqueued scripts/styles not being included in combination
+* Fixed external files not being concatenated but still removed
+* Added option to exclude external files from concatentation
 
 = 2.2 =
 

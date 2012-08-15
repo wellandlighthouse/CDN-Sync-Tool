@@ -35,6 +35,13 @@
 					<td><strong>If you have issues with advanced/simple then try whitespace only.</strong></td>
 				</tr>
 				<tr valign="top">
+					<th scope="row"><label>Exclude external files from combination/minification</label></th>
+					<td>
+						<input type="radio" value="yes" id="cst-js-exclude-external-yes" name="options[cst-js-exclude-external]" <?php if (get_option('cst-js-exclude-external') == 'yes') { echo 'checked="checked"'; }?> /><label for="cst-js-exclude-external-yes" class="cst-inline-label">Yes</label>
+						<input type="radio" value="no" id="cst-js-exclude-external-no" name="options[cst-js-exclude-external]" <?php if (get_option('cst-js-exclude-external') == 'no') { echo 'checked="checked"'; }?> /><label for="cst-js-exclude-external-no" class="cst-inline-label">No</label>
+					</td>
+				</tr>
+				<tr valign="top">
 					<th scope="row"><label>Exclude JS files from combination/minification</label></th>
 					<td>
 						<textarea id="cst-js-exclude" name="options[cst-js-exclude]" rows="5" cols="50"><?php $fileslist = get_option('cst-js-exclude'); $fileslist = str_replace(',', "\n", $fileslist); echo $fileslist; ?></textarea>
