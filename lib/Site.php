@@ -53,6 +53,11 @@ class Cst_Site {
 
 		foreach ($stylesheets[0] as $stylesheet) {
 
+			// Exclude external files; TODO: add as option
+			if (!preg_match('$'.site_url().'$', $stylesheet)) {
+				continue;
+			}
+
 			// Get the filepath
 			$regex = '$';
 			if ($filetype == 'css') {
