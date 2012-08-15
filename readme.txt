@@ -14,8 +14,6 @@ Front end optimisation plugin to be used with WP-Supercache.
 
 Uploads/syncs your static files to a Content Delivery Network (CDN) with push CDNs such as Amazon S3 / CloudFront and CloudFiles as well as Origin Pull CDNs such as MaxCDN / NetDNA. You can choose files from your media library, theme directory, WordPress's wp-include directory and plugin directories as well as new media library uploads.
 
-Plugin runs images thought smushit.com to losslessy compress images, as well as GD compression of images.
-
 There is also concatenation of all Javascript and CSS files in the header and footer to one file each to reduce HTTP requests. Also moves the javascript file to the footer so the browser doesn't hold up the page load doing it. Leverages Google's Closure Compiler to remove whitespace, do simple and advanced optimisations to reduce file size.
 
 This plugin requires WP Super Cache to be installed. As it will handle the rewriting of the inclusion of static files to ensure all static files will load from your CDN.
