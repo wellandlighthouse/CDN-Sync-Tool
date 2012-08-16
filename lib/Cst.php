@@ -145,6 +145,16 @@ class Cst {
 			$extension = pathinfo($file, PATHINFO_EXTENSION);
 			$object->content_type = $mime_types[$extension];
 			$result = $object->load_from_filename($file);
+		} else if ($this->connectionType == 'WebDAV') {
+			// Ensure directory exists, create it otherwise
+			$remotePathExploded = explode('/', $remotePath);
+			$filename = array_pop($remotePathExploded);
+			$currentPath = '';
+			foreach ($remotePathExploded as $path) {
+				$response = $this->cdnConnection->request('MKCOL', get_option('cst-webdav-basedir').'/'.$currentPath.'/'.$path);
+				$currentPath .= $path;
+			}
+			$this->cdnConnection->request('PUT', get_option('cst-webdav-basedir').'/'.$remotePath, file_get_contents($file));
 		}
 	}
 
