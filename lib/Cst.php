@@ -80,6 +80,16 @@ class Cst {
 			}
 		} else if ($this->connectionType == 'WebDAV') {
 			require_once CST_DIR.'lib/api/webdav/Sabre/autoload.php';
+			$settings = array(
+				'baseUri' => get_option('cst-webdav-host'),
+				'userName' => get_option('cst-webdav-username'),
+				'password' => get_option('cst-webdav-password'),
+			);
+			$client = new Sabre_DAV_Client($settings);
+			$response = $client->request('GET');
+			if ($response['statusCode'] != 200) {
+				CST_Page::$messages[] = 'WebDAV connection error, server responded with code '.$response['statusCode'].'.';
+			}
 		}
 	}
 
