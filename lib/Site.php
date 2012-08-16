@@ -148,10 +148,18 @@ class Cst_Site {
 		$fileUrl = get_option('ossdl_off_cdn_url').'/'.get_option('cst-'.$filetype.'-savepath').'/'.$hash.'.'.$filetype;
 		if ($filetype == 'css') {
 			$linkTag = '<link rel="stylesheet" type="text/css" href="'.$fileUrl.'" />';
+			$buffer = preg_replace('$<head[^er]*>$', '<head>'.$linkTag, $buffer);
 		} else {
-			$linkTag = '<script type="text/javascript" src="'.$fileUrl.'"></script>';
+			if (get_option('cst-js-placement') == 'body') {
+				if (preg_match('$</body*>$', $buffer)) {
+					$buffer = preg_replace('$</body*>$', $linkTag.'</body>', $buffer);
+				} else {
+					$buffer .= $linkTag;
+				}
+			} else {
+				$buffer = preg_replace('$<head[^er]*>$', '<head>'.$linkTag, $buffer);
+			}
 		}
-		$buffer = preg_replace('$<head[^er]*>$', '<head>'.$linkTag, $buffer);
 
 		return $buffer;
 	}

@@ -10,6 +10,13 @@
 					</td>
 				</tr>
 				<tr valign="top">
+					<th scope="row"><label>JS script tag placement</label></th>
+					<td>
+						<input type="radio" value="head" name="options[cst-js-placement]" id="cst-js-placement-head" <?php if (get_option('cst-js-placement') == 'head') { echo 'checked="checked"'; }?> /><label for="cst-js-placement-head" class="cst-inline-label">Head</label>
+						<input type="radio" value="body" name="options[cst-js-placement]" id="cst-js-placement-body" <?php if (get_option('cst-js-placement') == 'body') { echo 'checked="checked"'; } ?> /><label for="cst-js-placement-body" class="cst-inline-label">Body</label>
+					</td>
+				</tr>
+				<tr valign="top">
 					<th scope="row"><label for="cst-js-savepath">Save path</label></th>
 					<td>
 						<input type="text" id="cst-js-savepath" name="options[cst-js-savepath]" value="<?php echo get_option('cst-js-savepath'); ?>" />
