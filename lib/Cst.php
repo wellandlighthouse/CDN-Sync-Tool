@@ -78,6 +78,19 @@ class Cst {
 			} catch (Exception $e) {
 				CST_Page::$messages[] = 'Cloudfiles connection error, please check details.';
 			}
+		} else if ($this->connectionType == 'WebDAV') {
+			require_once CST_DIR.'lib/api/webdav/Sabre/autoload.php';
+			$settings = array(
+				'baseUri' => get_option('cst-webdav-host'),
+				'userName' => get_option('cst-webdav-username'),
+				'password' => get_option('cst-webdav-password'),
+			);
+			$client = new Sabre_DAV_Client($settings);
+			$response = $client->request('GET');
+			if ($response['statusCode'] >= 400) {
+				CST_Page::$messages[] = 'WebDAV connection error, server responded with code '.$response['statusCode'].'.';
+			}
+			$this->cdnConnection = $client;
 		}
 	}
 
@@ -132,6 +145,23 @@ class Cst {
 			$extension = pathinfo($file, PATHINFO_EXTENSION);
 			$object->content_type = $mime_types[$extension];
 			$result = $object->load_from_filename($file);
+		} else if ($this->connectionType == 'WebDAV') {
+			// Ensure directory exists, create it otherwise
+			$remotePathExploded = explode('/', $remotePath);
+			$filename = array_pop($remotePathExploded);
+			$currentPath = '';
+			foreach ($remotePathExploded as $path) {
+				try {
+					$response = $this->cdnConnection->request('MKCOL', get_option('cst-webdav-basedir').'/'.$currentPath.'/'.$path);
+				} catch (Exception $e) {
+					echo 'An error occured while attempting to sync to WebDAV. Please report this to <a href="http://github.com/fubralimited/CDN-Sync-Tool/issues">GitHub</a>';
+					var_dump($e);
+					var_dump($response);
+					exit;
+				}
+				$currentPath .= '/'.$path;
+			}
+			$this->cdnConnection->request('PUT', get_option('cst-webdav-basedir').'/'.$remotePath, file_get_contents($file));
 		}
 	}
 
