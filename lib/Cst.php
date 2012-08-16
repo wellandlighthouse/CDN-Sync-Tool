@@ -78,6 +78,8 @@ class Cst {
 			} catch (Exception $e) {
 				CST_Page::$messages[] = 'Cloudfiles connection error, please check details.';
 			}
+		} else if ($this->connectionType == 'WebDAV') {
+			require_once CST_DIR.'lib/api/webdav/Sabre/autoload.php';
 		}
 	}
 
