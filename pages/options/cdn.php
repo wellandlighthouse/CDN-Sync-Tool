@@ -112,6 +112,12 @@
 					<tr valign="top">
 						<th scope="row"><label for="webdav-host">Host</label></th>
 						<td><input type="text" name="options[cst-webdav-host]" id="webdav-host" <?php if (isset(self::$options['cst-webdav-host'])) {echo 'value="'.esc_attr(self::$options['cst-webdav-host']).'"'; } ?> /></td>
+					</tr>
+					<tr valign="top">
+						<th scope="row"><label for="webdav-basedir">Base directory</label></th>
+						<td><input type="text" name="options[cst-webdav-basedir]" id="webdav-basedir" <?php if (isset(self::$options['cst-webdav-basedir'])) {echo 'value="'.esc_attr(self::$options['cst-webdav-basedir']).'"'; } ?> /></td>
+						<td><strong>No trailing slash (/)</strong></td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
