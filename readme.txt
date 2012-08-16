@@ -108,10 +108,11 @@ The difference is that with Origin Pull the files are pulled from your web host 
 
 = 2.2.1 =
 
-* Added automatically sync new media files
 * Fixed enqueued scripts/styles not being included in combination
 * Fixed external files not being concatenated but still removed
 * Added option to exclude external files from concatentation
+* Added automatically sync new media files
+* Added WebDAV as a CDN option
 
 = 2.2 =
 
