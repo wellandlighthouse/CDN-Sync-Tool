@@ -9,6 +9,7 @@
 							<option value="S3" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'S3') { echo 'selected="selected"'; } ?>>Amazon S3</option>
 							<option value="FTP" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'FTP') { echo 'selected="selected"'; } ?>>(S)FTP</option>
 							<option value="Cloudfiles" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'Cloudfiles') { echo 'selected="selected"'; } ?>>Cloudfiles</option>
+							<option value="WebDAV" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'WebDAV') { echo 'selected="selected"'; } ?>>WebDAV</option>
 							<option value="Origin" <?php if (isset(self::$options['cst-cdn']) && self::$options['cst-cdn'] == 'Origin') { echo 'selected="selected"'; } ?>>NetDNA/MaxCDN/Origin Pull</option>
 						</select>
 					</td>
@@ -95,6 +96,22 @@
 						<th scope="row"><label for="cf-container">Container</label></th>
 						<td><input type="text" name="options[cst-cf-container]" id="cf-container" <?php if (isset(self::$options['cst-cf-container'])) {echo 'value="'.esc_attr(self::$options['cst-cf-container']).'"'; } ?> /></td>
 						<td><strong>If the container does not exist it will be created</strong></td>
+				</tbody>
+			</table>
+
+			<table class="form-table WebDAV">
+				<tbody>
+					<tr valign="top">
+						<th scope="row"><label for="webdav-username">Username</label></th>
+						<td><input type="text" name="options[cst-webdav-username]" id="webdav-username" <?php if (isset(self::$options['cst-webdav-username'])) {echo 'value="'.esc_attr(self::$options['cst-webdav-username']).'"'; } ?> /></td>
+					</tr>
+					<tr valign="top">
+						<th scope="row"><label for="webdav-password">Password</label></th>
+						<td><input type="password" name="options[cst-webdav-password]" id="webdav-password" <?php if (isset(self::$options['cst-webdav-password'])) {echo 'value="'.esc_attr(self::$options['cst-webdav-password']).'"'; } ?> /></td>
+					</tr>
+					<tr valign="top">
+						<th scope="row"><label for="webdav-host">Host</label></th>
+						<td><input type="text" name="options[cst-webdav-host]" id="webdav-host" <?php if (isset(self::$options['cst-webdav-host'])) {echo 'value="'.esc_attr(self::$options['cst-webdav-host']).'"'; } ?> /></td>
 				</tbody>
 			</table>
 		</div>
