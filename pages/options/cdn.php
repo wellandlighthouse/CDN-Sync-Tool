@@ -116,7 +116,7 @@
 					<tr valign="top">
 						<th scope="row"><label for="webdav-basedir">Base directory</label></th>
 						<td><input type="text" name="options[cst-webdav-basedir]" id="webdav-basedir" <?php if (isset(self::$options['cst-webdav-basedir'])) {echo 'value="'.esc_attr(self::$options['cst-webdav-basedir']).'"'; } ?> /></td>
-						<td><strong>No trailing slash (/)</strong></td>
+						<td><strong>No trailing slash (/). Must already exist</strong></td>
 					</tr>
 				</tbody>
 			</table>
