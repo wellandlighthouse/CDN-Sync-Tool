@@ -151,8 +151,15 @@ class Cst {
 			$filename = array_pop($remotePathExploded);
 			$currentPath = '';
 			foreach ($remotePathExploded as $path) {
-				$response = $this->cdnConnection->request('MKCOL', get_option('cst-webdav-basedir').'/'.$currentPath.'/'.$path);
-				$currentPath .= $path;
+				try {
+					$response = $this->cdnConnection->request('MKCOL', get_option('cst-webdav-basedir').'/'.$currentPath.'/'.$path);
+				} catch (Exception $e) {
+					echo 'An error occured while attempting to sync to WebDAV. Please report this to <a href="http://github.com/fubralimited/CDN-Sync-Tool/issues">GitHub</a>';
+					var_dump($e);
+					var_dump($response);
+					exit;
+				}
+				$currentPath .= '/'.$path;
 			}
 			$this->cdnConnection->request('PUT', get_option('cst-webdav-basedir').'/'.$remotePath, file_get_contents($file));
 		}
