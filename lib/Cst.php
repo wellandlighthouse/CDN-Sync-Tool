@@ -87,9 +87,10 @@ class Cst {
 			);
 			$client = new Sabre_DAV_Client($settings);
 			$response = $client->request('GET');
-			if ($response['statusCode'] != 200) {
+			if ($response['statusCode'] >= 400) {
 				CST_Page::$messages[] = 'WebDAV connection error, server responded with code '.$response['statusCode'].'.';
 			}
+			$this->cdnConnection = $client;
 		}
 	}
 
