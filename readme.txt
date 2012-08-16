@@ -1,12 +1,12 @@
 === CDN Sync Tool ===
 Contributors: olliea95,Fubra,Backie,ray.viljoen
-Tags: CDN,content delivery network, sync, CDN sync, tool, Content, Upload, Files, Media, Optimization,cloudfront,cloud front,amazon s3,s3,cloudfiles,theme,MaxCDN,Origin Pull,Origin,Pull,files,speed,faster,accelerator,Page Load, zoom
+Tags: CDN,content delivery network, sync, CDN sync, tool, Content, Upload, Files, Media, Optimization,cloudfront,cloud front,amazon s3,s3,cloudfiles,theme,MaxCDN,Origin Pull,Origin,Pull,files,speed,faster,accelerator,Page Load, zoom, webdav, web, dav
 Tested up to: 3.1
 Stable tag: 2.2
 Requires At Least: 3.0
 Donate Link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=99WUGVV4HY5ZE&lc=GB&item_name=CATN%20Plugins-CDN&item_number=catn-cdn&currency_code=GBP&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted 
 
-Syncs static files to a content delivery network (CDN) such as Amazon S3 / CloudFront,MaxCDN and CloudFiles. To be used with WP-Supercache.
+Syncs static files to a content delivery network (CDN) such as Amazon S3 / CloudFront,MaxCDN, WebDAV, FTP and CloudFiles. To be used with WP-Supercache.
  
 == Description ==
 
