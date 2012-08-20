@@ -29,6 +29,9 @@ class FTPConnectionTest extends WP_UnitTestCase {
 		require CST_DIR.'tests/CST/ConnectionTests/FTPConnectionSettings.php';
 		$this->cst->connectionType = 'FTP';
 
+		// Set lower timeout so we aren't waiting days
+		update_option('cst-ftp-timeout', 5);
+
 		// Incorrect server
 		update_option('cst-ftp-server', 'example.com');
 		update_option('cst-ftp-username', $username);
