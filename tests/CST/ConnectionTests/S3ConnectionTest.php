@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group connection
+ */
 class S3ConnectionTest extends WP_UnitTestCase {
 	public $plugin_slug = 'cdn-sync-tool';
 

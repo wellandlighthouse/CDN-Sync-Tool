@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * @group connection
+ */
 class CFConnectionTest extends WP_UnitTestCase {
 	public function setUp() {
 		parent::setUp();
