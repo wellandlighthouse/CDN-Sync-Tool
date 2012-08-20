@@ -17,7 +17,7 @@ class S3ConnectionTest extends WP_UnitTestCase {
 		update_option('cst-s3-secretkey', $secretkey);
 		$this->cst->connectionType = 'S3';
 		$this->cst->createConnection();
-		$this->assertNotNull($this->cst->getConnection(), 'CDN Connection has not been created correctly');
+		$this->assertInstanceOf('S3', $this->cst->getConnection(), 'CDN Connection has not been created correctly');
 	}
 
 	public function testBadS3ConnectionSettings() {
