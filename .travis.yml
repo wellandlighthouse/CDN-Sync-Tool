@@ -7,16 +7,13 @@ before_script:
     - mkdir -p ~/src
     - git clone https://github.com/nb/wordpress-tests.git ~/src/wordpress-tests
     - git clone git://gist.github.com/3404014.git ~/src/3404014
-    - cp ~/src/3404014/unittest-config.php ~/wordpress-tests/
+    - cp ~/src/3404014/unittests-config.php ~/wordpress-tests/
     - cd ~/src
     - wget http://wordpress.org/latest.tar.gz
     - tar zxvf ~/src/latest.tar.gz
     - cp -r ~/builds/fubralimited/CDN-Sync-Tool ~/src/wordpress/wp-content/plugins/
     - mv ~/src/wordpress/wp-content/plugins/CDN-Sync-Tool ~/src/wordpress/wp-content/plugins/cdn-sync-tool
     - cd ~/src/wordpress/wp-content/plugins/cdn-sync-tool
-    - ls -al
-    - ls -al /home/vagrant/src/
-    - ls -al /home/vagrant/src/wordpress-tests
 branches:
     only:
         - tests
