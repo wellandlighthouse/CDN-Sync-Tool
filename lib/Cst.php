@@ -73,7 +73,7 @@ class Cst {
 				} else {
 					$timeout = 30;
 				}
-				$this->cdnConnection = ftp_connect(get_option('cst-ftp-server'), get_option('cst-ftp-port'), $timeout);
+				$this->cdnConnection = @ftp_connect(get_option('cst-ftp-server'), get_option('cst-ftp-port'), $timeout);
 				if ($this->cdnConnection === false) {
 					CST_Page::$messages[] = 'FTP connection error, please check details.';
 				} else {
