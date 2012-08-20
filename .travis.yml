@@ -2,4 +2,14 @@ language: php
 php:
     - 5.3
     - 5.4
+before-script:
+    - mysql -e 'create database wp_tests;'
+    - mkdir -p ~/src
+    - git clone https://github.com/nb/wordpress-tests.git ~/src
+    - git clone git://gist.github.com/3404014.git ~/src/wordpress-tests
+    - wget http://wordpress.org/latest.tar.gz ~/src
+    - tar zxvf ~/src/latest.tar.gz
+
+before-install:
+    - cd ~/src/wordpress/wp-content/plugins/
 script: phpunit --exclude-group connection
