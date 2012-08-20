@@ -21,6 +21,7 @@ class S3ConnectionTest extends WP_UnitTestCase {
 	}
 
 	public function testBadS3ConnectionSettings() {
+		$this->markTestIncomplete('FTP bad connection settings test needs more work');
 		require CST_DIR . 'tests/CST/ConnectionTests/S3ConnectionSettings.php';
 		// Check incorrect accesskey
 		update_option('cst-s3-accesskey', 'askdjadjs');
