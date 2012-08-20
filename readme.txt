@@ -113,6 +113,7 @@ The difference is that with Origin Pull the files are pulled from your web host 
 * Added option to exclude external files from concatentation
 * Added automatically sync new media files
 * Added WebDAV as a CDN option
+* Unit tests are now included - more will be added in the future
 
 = 2.2 =
 
