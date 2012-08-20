@@ -7,7 +7,8 @@ before_script:
     - mkdir -p ~/src
     - git clone https://github.com/nb/wordpress-tests.git ~/src
     - git clone git://gist.github.com/3404014.git ~/src/wordpress-tests
-    - wget http://wordpress.org/latest.tar.gz ~/src
+    - cd ~/src
+    - wget http://wordpress.org/latest.tar.gz
     - tar zxvf ~/src/latest.tar.gz
     - cp -r ~/builds/fubralimited/CDN-Sync-Tool ~/src/wordpress/wp-content/plugins/
 branches:
