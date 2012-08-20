@@ -10,7 +10,8 @@
  * @license GNU GPLv2
  */
 class Cst {
-	protected $cdnConnection, $connectionType, $fileTypes, $ftpHome;
+	protected $cdnConnection, $fileTypes, $ftpHome;
+	public $connectionType;
 
 	function __construct() {
 		$this->connectionType = get_option('cst-cdn');
@@ -27,6 +28,19 @@ class Cst {
 	}
 
 	/**
+	 * Returns the cdn connection, if doesn't exist returns false
+	 *
+	 * @return CDNConnection object / false
+	 */
+	public function getConnection() {
+		if(isset($this->cdnConnection) && $this->cdnConnection != false) {
+			return $this->cdnConnection;
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Initialises the connection to the CDN
 	 * 
 	 */
@@ -39,6 +53,7 @@ class Cst {
 			$this->cdnConnection = new S3($awsAccessKey, $awsSecretKey);
 			if (@$this->cdnConnection->listBuckets() === false) {
 				CST_page::$messages[] = 'S3 connection error, please check details';
+				$this->cdnConnection = false;
 			}
 		} else if ($this->connectionType == 'FTP') {
 			if (get_option('cst-ftp-sftp') == 'yes') {

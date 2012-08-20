@@ -18,8 +18,9 @@ define('CST_TABLE_FILES', $wpdb->get_blog_prefix().'cst_new_files');
 define('CST_CONTACT_EMAIL', 'support@catn.com');
 
 
+require_once CST_DIR.'lib/Cst.php';
+$GLOBALS['core'] = new Cst();
 if (is_admin()) {
-	require_once CST_DIR.'lib/Cst.php';
 	$core = new Cst();
 } else {
 	require_once CST_DIR.'lib/Site.php';
