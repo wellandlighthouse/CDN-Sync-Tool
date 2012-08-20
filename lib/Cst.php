@@ -77,10 +77,12 @@ class Cst {
 				if ($this->cdnConnection === false) {
 					CST_Page::$messages[] = 'FTP connection error, please check details.';
 				} else {
-					if (ftp_login($this->cdnConnection, get_option('cst-ftp-username'), get_option('cst-ftp-password')) === false) {
+					if (@ftp_login($this->cdnConnection, get_option('cst-ftp-username'), get_option('cst-ftp-password')) === false) {
 						CST_Page::$messages[] = 'FTP login error, please check details.';
+						$this->cdnConnection = false;
+					} else {
+						$this->ftpHome = ftp_pwd($this->cdnConnection);
 					}
-					$this->ftpHome = ftp_pwd($this->cdnConnection);
 				}
 			}
 		} else if ($this->connectionType == 'Cloudfiles') {
