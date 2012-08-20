@@ -13,6 +13,9 @@ before_script:
     - cp -r ~/builds/fubralimited/CDN-Sync-Tool ~/src/wordpress/wp-content/plugins/
     - mv ~/src/wordpress/wp-content/plugins/CDN-Sync-Tool ~/src/wordpress/wp-content/plugins/cdn-sync-tool
     - cd ~/src/wordpress/wp-content/plugins/cdn-sync-tool
+    - ls -al
+    - ls -al /home/vagrant/src/
+    - ls -al /home/vagrant/src/wordpress-tests
 branches:
     only:
         - tests
