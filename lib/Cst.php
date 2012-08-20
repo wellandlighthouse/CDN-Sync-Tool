@@ -92,6 +92,7 @@ class Cst {
 				$this->cdnConnection = $this->cdnConnection->create_container(get_option('cst-cf-container'));
 			} catch (Exception $e) {
 				CST_Page::$messages[] = 'Cloudfiles connection error, please check details.';
+				$this->cdnConnection = false;
 			}
 		} else if ($this->connectionType == 'WebDAV') {
 			require_once CST_DIR.'lib/api/webdav/Sabre/autoload.php';
@@ -104,6 +105,7 @@ class Cst {
 			$response = $client->request('GET');
 			if ($response['statusCode'] >= 400) {
 				CST_Page::$messages[] = 'WebDAV connection error, server responded with code '.$response['statusCode'].'.';
+				$this->cdnConnection = false;
 			}
 			$this->cdnConnection = $client;
 		}
