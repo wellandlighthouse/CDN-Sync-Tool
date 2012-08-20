@@ -47,6 +47,22 @@ class FTPConnectionTest extends WP_UnitTestCase {
 		update_option('cst-ftp-port', $port);
 		$this->cst->createConnection();
 		$this->assertFalse($this->cst->getConnection());
+
+		// Nonexistant user
+		update_option('cst-ftp-server', $server);
+		update_option('cst-ftp-username', 'thisuserisfake');
+		update_option('cst-ftp-password', $password);
+		update_option('cst-ftp-port', $port);
+		$this->cst->createConnection();
+		$this->assertFalse($this->cst->getConnection());
+
+		// Incorrect password
+		update_option('cst-ftp-server', $server);
+		update_option('cst-ftp-username', $username);
+		update_option('cst-ftp-password', 'wrongpass');
+		update_option('cst-ftp-port', $port);
+		$this->cst->createConnection();
+		$this->assertFalse($this->cst->getConnection());
 	}
 
 }
