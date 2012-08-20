@@ -68,7 +68,12 @@ class Cst {
 					}
 				}
 			} else {
-				$this->cdnConnection = ftp_connect(get_option('cst-ftp-server'), get_option('cst-ftp-port'), 30);
+				if (get_option('cst-ftp-timeout')) {
+					$timeout = get_option('cst-ftp-timeout');
+				} else {
+					$timeout = 30;
+				}
+				$this->cdnConnection = ftp_connect(get_option('cst-ftp-server'), get_option('cst-ftp-port'), $timeout);
 				if ($this->cdnConnection === false) {
 					CST_Page::$messages[] = 'FTP connection error, please check details.';
 				} else {
