@@ -11,7 +11,7 @@ before_script:
     - wget http://wordpress.org/latest.tar.gz
     - tar zxvf ~/src/latest.tar.gz
     - cp -r ~/builds/fubralimited/CDN-Sync-Tool ~/src/wordpress/wp-content/plugins/
-    - mv ~/src/wordpress/wp-content/plugins/CDN-Sync-Tool ~/src/wordpress/wp-contents/plugins/cdn-sync-tool
+    - mv ~/src/wordpress/wp-content/plugins/CDN-Sync-Tool ~/src/wordpress/wp-content/plugins/cdn-sync-tool
     - cd ~/src/wordpress/wp-content/plugins/cdn-sync-tool
 branches:
     only:
