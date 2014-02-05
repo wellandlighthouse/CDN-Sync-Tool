@@ -1,7 +1,7 @@
 === CDN Sync Tool ===
-Contributors: Fubra,Backie, ray.viljoen,Olliea95
+Contributors: Fubra,Backie, ray.viljoen,Olliea95,schmoo2x
 Tags: CDN,content delivery network, sync, CDN sync, tool, Content, Upload, Files, Media, Optimization,cloudfront,cloud front,amazon s3,s3,cloudfiles,theme,MaxCDN,Origin Pull,Origin,Pull,files,speed,faster,accelerator,Page Load, zoom
-Tested up to: 3.1
+Tested up to: 3.8.1
 Stable tag: 1.12
 Requires At Least: 3.0
 
