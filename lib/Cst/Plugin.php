@@ -75,10 +75,8 @@ class Cst_Plugin {
 		if ( !current_user_can("manage_options") ) {
        		return false;
     	}
-		$wp_admin_bar->add_menu( array( 'title' => 'CDN Sync Tool', 'href' => admin_url('admin.php?page='.CST_PAGE_MAIN), 'id' => CST_PAGE_MAIN) );		
+		$wp_admin_bar->add_menu( array( 'title' => 'CDN Sync Tool', 'href' => admin_url('admin.php?page='.CST_PAGE_MAIN), 'id' => CST_PAGE_MAIN) );
 		$wp_admin_bar->add_menu( array( 'title' => 'CatN', 'href' => admin_url('admin.php?page='.CST_PAGE_CATN), 'id' => CST_PAGE_CATN, 'parent' => CST_PAGE_MAIN) );
-		$wp_admin_bar->add_menu( array( 'title' => 'Contact', 'href' => admin_url('admin.php?page='.CST_PAGE_CONTACT), 'id' => CST_PAGE_CONTACT, 'parent' => CST_PAGE_MAIN) );
-	
 	}
 	
 	/**
