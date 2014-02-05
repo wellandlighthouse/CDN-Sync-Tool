@@ -2,31 +2,11 @@
 
 /*
 Plugin Name: CDN Sync Tool
-Plugin URI: http://catn.com/
-Description: Syncs static files to a CDN
-Author: Fubra Limited
-Author URI: http://www.catn.com
-Version: 1.12
+Description: Syncs static files to a CDN. Based on the plugin by Fubra Limited
+Author: Well & Lighthouse
+Author URI: http://www.wellandlighthouse.com
+Version: 2.0
 */
-
-/*
- * Copyright (C) 2010  Fubra Limited
- * 
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.Gert
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- */ 
-
 
 require_once 'etc/constants.php';
 require_once CST_DIR.'/lib/Cst/Debug.php';

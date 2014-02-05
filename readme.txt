@@ -4,7 +4,6 @@ Tags: CDN,content delivery network, sync, CDN sync, tool, Content, Upload, Files
 Tested up to: 3.1
 Stable tag: 1.12
 Requires At Least: 3.0
-Donate Link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=99WUGVV4HY5ZE&lc=GB&item_name=CATN%20Plugins-CDN&item_number=catn-cdn&currency_code=GBP&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted 
 
 Syncs static files to a content delivery network (CDN) such as Amazon S3 / CloudFront,MaxCDN and CloudFiles. To be used with WP-Supercache.
  
@@ -19,8 +18,6 @@ Plugin runs images thought smushit.com to losslessy compress images, as well as 
 There is also concatenation of all Javascript and CSS files in the header and footer to one file each to reduce HTTP requests. Also moves the javascript file to the footer so the browser doesn't hold up the page load doing it. Leverages Google's Closure Compiler to remove whitespace, do simple and advanced optimisations to reduce file size.
 
 This plugin requires WP Super Cache to be installed. As it will handle the rewriting of the inclusion of static files to ensure all static files will load from your CDN.
-
-Developed by <a href="http://www.catn.com">PHP Hosting Experts CatN</a>
 
 == Frequently Asked Questions ==
 
