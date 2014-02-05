@@ -169,7 +169,7 @@ class Cst_Plugin_Admin {
 		
 		Cst_Debug::addLog("Adding CST Admin Menus");
 		
-		return add_menu_page('CDN Sync Tool', 'CDN Sync Tool', 'manage_options', CST_PAGE_MAIN, array($this->showPage("Main"), "display" ) ) &&
+		return add_menu_page('CDN Sync Tool', 'CDN Sync Tool', 'manage_options', CST_PAGE_MAIN, array($this->showPage("Main"), "display" ) );
 		
 	}
 	
