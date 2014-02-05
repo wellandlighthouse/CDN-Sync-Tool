@@ -200,7 +200,6 @@ class Cst_Page_Main extends Cst_Page {
 			$images["overwrite"] = $_POST["overwrite"];
 			$images["compression_level"] = $_POST["compression_level"];
 			$general = array();
-			$general["powered_by"] =  $_POST["powered_by"];			
 			
 			if ( empty($errorArray) ){
 				

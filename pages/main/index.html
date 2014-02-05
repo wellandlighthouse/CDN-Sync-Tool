@@ -372,30 +372,6 @@ $disabled = "";
 									</div> 
 									
 								</div>								
-								<div id="dashboard_misc" class="postbox">
-									<div class="handlediv" title="Click to toggle">
-										<br />
-									</div>
-									<h3 class="hndle">
-										<span>Misc</span>
-									</h3>
-									<div class="inside">
-										<table class="form-table">
-											<tr class="even">
-												<th scope="row">Powered by</th>
-												<td>
-													<input <?php echo $disabled; ?> type="radio" name="powered_by" value="yes" id="powered_by_yes" <?php if ((!isset($general) || !is_array($general) ) && !isset($general["powered_by"]) || $general["powered_by"] == "yes"){ ?>checked="checked"<?php } ?> /> <label for="powered_by_yes">Yes</label>
-													<input <?php echo $disabled; ?> type="radio" name="powered_by" value="no" id="powered_by_no" <?php if ((isset($general) && is_array($general) ) || isset($general["powered_by"]) && $general["powered_by"] == "no"){ ?>checked="checked"<?php } ?> /> <label for="powered_by_no">No</label>
-												</td>
-											</tr>
-											<tr class="even">
-												<td colspan="2">Tell the world that you're site is using this plugin and a friendly link to our site. Best and easiest way to thank us for our work.</td>
-											</tr>
-										</table>
-										<input <?php echo $disabled; ?> type="submit" class="button-primary" value="Save" />
-									</div> 
-									</form>
-								</div>
 							</div>
 						</div>
 					</div>
