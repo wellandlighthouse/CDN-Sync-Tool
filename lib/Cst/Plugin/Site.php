@@ -28,8 +28,7 @@ class Cst_Plugin_Site {
 		}
 		
 		return add_action("wp_loaded", array($this, "startObCache") ,9999) &&
-			   add_action("wp_footer", array($this, "stopObCache") ,9999) &&
-			   add_action('wp_footer', array($this, "showFooter"));
+			   add_action("wp_footer", array($this, "stopObCache") ,9999);
 		
 	}
 	
@@ -84,24 +83,6 @@ class Cst_Plugin_Site {
 		ob_end_flush();
 		Cst_Debug::addLog("Output buffering stopped");
 		return true;
-	}
-	
-	/**
-	 * Handles the displaying of the support Link
-	 * 
-	 * @since 0.1
-	 */
-	public function showFooter(){
-		
-		Cst_Debug::addLog("Adding footer details");
-		echo "<!-- CDN Sync Tool ".CST_VERSION." Developed by iain.cambridge at fubra.com -->";
-	
-		$general = get_option('cst_general');
-		
-		if ( is_array($general) && isset($general["support"]) && $general["support"] == "yes"){
-			echo '<p style="text-align: center;">Powered by CDN Sync Tools developed by <a href="http://catn.com/">PHP Hosting Experts CatN</a></p>';
-		}
-	
 	}
 	
 	/**
